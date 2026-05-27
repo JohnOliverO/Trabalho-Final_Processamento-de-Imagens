@@ -891,7 +891,288 @@ namespace ImageLoader
             }
             return image3;
         }
-        /*Botões*/
+        Bitmap Prewitt_Image(Bitmap image1)
+        {
+            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+
+            image1 = GrayScale_Average_Image(image1);
+
+            for (int i = 0; i < image1.Width; i++)
+            {
+                for (int j = 0; j < image1.Height; j++)
+                {
+                    if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
+                    {
+                        image3.SetPixel(i, j, Color.Black);
+                    }
+                    else
+                    {
+                        double Gx = 0;
+                        double Gy = 0;
+
+                        for (int k = 0; k < 3; k++)
+                        {
+                            for (int l = 0; l < 3; l++)
+                            {
+                                Color pixel = image1.GetPixel(i - 1 + k, j - 1 + l);
+                                
+                                if(k == 0)
+                                {
+                                    Gy += pixel.R * (-1);
+                                }
+                                else if(k == 2)
+                                {
+                                    Gy += pixel.R;
+                                }
+                                if (l == 0)
+                                {
+                                    Gx += pixel.R * (-1);
+                                }
+                                else if (l == 2)
+                                {
+                                    Gx += pixel.R;
+                                }
+                            }
+                        }
+
+                        int V = (int)Math.Round(Math.Pow(Gx * Gx + Gy * Gy,0.5));
+
+                        if (V > 255)
+                            V = 255;
+                        if (V < 0)
+                            V = 0;
+
+                        Color cor = Color.FromArgb(255, V, V, V);
+
+                        image3.SetPixel(i, j, cor);
+
+                    }
+
+                }
+            }
+            return image3;
+        }
+        Bitmap Sobel_Image(Bitmap image1)
+        {
+            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+
+            image1 = GrayScale_Average_Image(image1);
+
+            for (int i = 0; i < image1.Width; i++)
+            {
+                for (int j = 0; j < image1.Height; j++)
+                {
+                    if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
+                    {
+                        image3.SetPixel(i, j, Color.Black);
+                    }
+                    else
+                    {
+                        double Gx = 0;
+                        double Gy = 0;
+
+                        for (int k = 0; k < 3; k++)
+                        {
+                            for (int l = 0; l < 3; l++)
+                            {
+                                Color pixel = image1.GetPixel(i - 1 + k, j - 1 + l);
+
+                                if (k == 0)
+                                {
+                                    if (l == 1)
+                                    {
+                                        Gy += pixel.R * (-2);
+                                    }
+                                    else
+                                    {
+                                        Gy += pixel.R * (-1);
+                                    }
+                                }
+                                else if (k == 2)
+                                {
+                                    if (l == 1)
+                                    {
+                                        Gy += pixel.R * 2;
+                                    }
+                                    else
+                                    {
+                                        Gy += pixel.R;
+                                    }
+                                }
+                                if (l == 0)
+                                {
+                                    if(k == 1)
+                                    {
+                                        Gx += pixel.R * (-2);
+                                    }
+                                    else
+                                    {
+                                        Gx += pixel.R * (-1);
+                                    }
+                                }
+                                else if (l == 2)
+                                {
+                                    if (k == 1)
+                                    {
+                                        Gx += pixel.R * 2;
+                                    }
+                                    else
+                                    {
+                                        Gx += pixel.R;
+                                    }
+                                }
+                            }
+                        }
+
+                        int V = (int)Math.Round(Math.Pow(Gx * Gx + Gy * Gy, 0.5));
+
+                        if (V > 255)
+                            V = 255;
+
+                        if (V < 0)
+                            V = 0;
+
+                            Color cor = Color.FromArgb(255, V, V, V);
+
+                        image3.SetPixel(i, j, cor);
+
+                    }
+
+                }
+            }
+            return image3;
+        }
+        Bitmap Laplace_Mask1_Image(Bitmap image1)
+        {
+            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+
+            image1 = GrayScale_Average_Image(image1);
+
+            for (int i = 0; i < image1.Width; i++)
+            {
+                for (int j = 0; j < image1.Height; j++)
+                {
+                    if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
+                    {
+                        image3.SetPixel(i, j, Color.Black);
+                    }
+                    else
+                    {
+                        int Gx = 0;
+                        int Gy = 0;
+                        for (int k = 0; k < 3; k++)
+                        {
+                            for (int l = 0; l < 3; l++)
+                            {
+                                Color pixel = image1.GetPixel(i - 1 + k, j - 1 + l);
+
+                                if(k == 1 || l == 1)
+                                {
+                                    if(k == 1 && l == 1)
+                                    {
+                                        Gx += pixel.R * (-4);
+                                    }
+                                    else
+                                    {
+                                        Gx += pixel.R;
+                                    }
+                                }
+                                if (k == 1 || l == 1)
+                                {
+                                    if (k == 1 && l == 1)
+                                    {
+                                        Gy += pixel.R * 4;
+                                    }
+                                    else
+                                    {
+                                        Gy += pixel.R * (-1);
+                                    }
+                                }
+                            }
+                        }
+                        int V = (int)Math.Round(Math.Pow(Gx * Gx + Gy * Gy, 0.5));
+
+                        if (V > 255)
+                            V = 255;
+
+                        if (V < 0)
+                            V = 0;
+
+                        Color cor = Color.FromArgb(255, V, V, V);
+
+                        image3.SetPixel(i, j, cor);
+
+                    }
+
+                }
+            }
+            return image3;
+        }
+        Bitmap Laplace_Mask2_Image(Bitmap image1)
+        {
+            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+
+            image1 = GrayScale_Average_Image(image1);
+
+            for (int i = 0; i < image1.Width; i++)
+            {
+                for (int j = 0; j < image1.Height; j++)
+                {
+                    if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
+                    {
+                        image3.SetPixel(i, j, Color.Black);
+                    }
+                    else
+                    {
+                        int Gx = 0;
+                        int Gy = 0;
+                        for (int k = 0; k < 3; k++)
+                        {
+                            for (int l = 0; l < 3; l++)
+                            {
+                                Color pixel = image1.GetPixel(i - 1 + k, j - 1 + l);
+
+                                if (k == 1 && l == 1)
+                                {
+                                    Gx += pixel.R * (-8);
+                                }
+                                else
+                                {
+                                    Gx += pixel.R;
+                                }
+                                if (k == 1 && l == 1)
+                                {
+                                    Gy += pixel.R * 8;
+                                }
+                                else
+                                {
+                                    Gy += pixel.R * (-1);
+                                }
+                            }
+                        }
+                        int V = (int)Math.Round(Math.Pow(Gx * Gx + Gy * Gy, 0.5));
+
+                        if (V > 255)
+                            V = 255;
+
+                        if (V < 0)
+                            V = 0;
+
+                        Color cor = Color.FromArgb(255, V, V, V);
+
+                        image3.SetPixel(i, j, cor);
+
+                    }
+
+                }
+            }
+            return image3;
+        }
+
+
+        /*==============================================================================================================================================================================
+        Botões
+        ===============================================================================================================================================================================*/
 
         private void Somar_Img_Click(object sender, EventArgs e)
         {
@@ -948,11 +1229,6 @@ namespace ImageLoader
             if (img1 == null)
             {
                 MessageBox.Show("img1 está nula");
-                return;
-            }
-            if (img2 == null)
-            {
-                MessageBox.Show("img2 está nula");
                 return;
             }
 
@@ -1451,6 +1727,82 @@ namespace ImageLoader
             try
             {
                 img3 = Smooth_Image(img1);
+                pictureBox3.Image = img3;
+                Tx_Resolution_Update();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void btPrewitt_Click(object sender, EventArgs e)
+        {
+            if (img1 == null)
+            {
+                MessageBox.Show("img1 está nula");
+                return;
+            }
+
+            try
+            {
+                img3 = Prewitt_Image(img1);
+                pictureBox3.Image = img3;
+                Tx_Resolution_Update();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void btSobel_Click(object sender, EventArgs e)
+        {
+            if (img1 == null)
+            {
+                MessageBox.Show("img1 está nula");
+                return;
+            }
+
+            try
+            {
+                img3 = Sobel_Image(img1);
+                pictureBox3.Image = img3;
+                Tx_Resolution_Update();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void btLaplace1_Click(object sender, EventArgs e)
+        {
+            if (img1 == null)
+            {
+                MessageBox.Show("img1 está nula");
+                return;
+            }
+
+            try
+            {
+                img3 = Laplace_Mask1_Image(img1);
+                pictureBox3.Image = img3;
+                Tx_Resolution_Update();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void btLaplace2_Click(object sender, EventArgs e)
+        {
+            if (img1 == null)
+            {
+                MessageBox.Show("img1 está nula");
+                return;
+            }
+
+            try
+            {
+                img3 = Laplace_Mask2_Image(img1);
                 pictureBox3.Image = img3;
                 Tx_Resolution_Update();
             }

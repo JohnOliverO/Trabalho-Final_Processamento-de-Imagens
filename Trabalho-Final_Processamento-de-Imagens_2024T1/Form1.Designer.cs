@@ -89,6 +89,10 @@
             this.btSmooth = new System.Windows.Forms.Button();
             this.cbPadding = new System.Windows.Forms.ComboBox();
             this.btPadding = new System.Windows.Forms.Button();
+            this.btPrewitt = new System.Windows.Forms.Button();
+            this.btSobel = new System.Windows.Forms.Button();
+            this.btLaplace1 = new System.Windows.Forms.Button();
+            this.btLaplace2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -540,6 +544,7 @@
             this.btFlip90R.Size = new System.Drawing.Size(25, 25);
             this.btFlip90R.TabIndex = 35;
             this.btFlip90R.UseVisualStyleBackColor = true;
+            this.btFlip90R.Click += new System.EventHandler(this.btFlip_90_R_Click);
             // 
             // btFlip90L
             // 
@@ -686,12 +691,6 @@
             // 
             this.cbPadding.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cbPadding.FormattingEnabled = true;
-            this.cbPadding.Items.AddRange(new object[] {
-            "Zero",
-            "Replicate",
-            "Reflect",
-            "Mirror",
-            "Wrap"});
             this.cbPadding.Location = new System.Drawing.Point(584, 482);
             this.cbPadding.Name = "cbPadding";
             this.cbPadding.Size = new System.Drawing.Size(58, 21);
@@ -707,11 +706,55 @@
             this.btPadding.UseVisualStyleBackColor = true;
             this.btPadding.Click += new System.EventHandler(this.btPadding_Click);
             // 
+            // btPrewitt
+            // 
+            this.btPrewitt.Location = new System.Drawing.Point(786, 470);
+            this.btPrewitt.Name = "btPrewitt";
+            this.btPrewitt.Size = new System.Drawing.Size(94, 23);
+            this.btPrewitt.TabIndex = 50;
+            this.btPrewitt.Text = "Prewitt";
+            this.btPrewitt.UseVisualStyleBackColor = true;
+            this.btPrewitt.Click += new System.EventHandler(this.btPrewitt_Click);
+            // 
+            // btSobel
+            // 
+            this.btSobel.Location = new System.Drawing.Point(786, 499);
+            this.btSobel.Name = "btSobel";
+            this.btSobel.Size = new System.Drawing.Size(94, 23);
+            this.btSobel.TabIndex = 51;
+            this.btSobel.Text = "Sobel";
+            this.btSobel.UseVisualStyleBackColor = true;
+            this.btSobel.Click += new System.EventHandler(this.btSobel_Click);
+            // 
+            // btLaplace1
+            // 
+            this.btLaplace1.Location = new System.Drawing.Point(886, 470);
+            this.btLaplace1.Name = "btLaplace1";
+            this.btLaplace1.Size = new System.Drawing.Size(94, 23);
+            this.btLaplace1.TabIndex = 52;
+            this.btLaplace1.Text = "Laplace1";
+            this.btLaplace1.UseVisualStyleBackColor = true;
+            this.btLaplace1.Click += new System.EventHandler(this.btLaplace1_Click);
+            // 
+            // btLaplace2
+            // 
+            this.btLaplace2.Location = new System.Drawing.Point(886, 499);
+            this.btLaplace2.Name = "btLaplace2";
+            this.btLaplace2.Size = new System.Drawing.Size(94, 23);
+            this.btLaplace2.TabIndex = 53;
+            this.btLaplace2.Text = "Laplace2";
+            this.btLaplace2.UseVisualStyleBackColor = true;
+            this.btLaplace2.Click += new System.EventHandler(this.btLaplace2_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1202, 549);
+            this.Controls.Add(this.btLaplace2);
+            this.Controls.Add(this.btLaplace1);
+            this.Controls.Add(this.btSobel);
+            this.Controls.Add(this.btPrewitt);
             this.Controls.Add(this.btPadding);
             this.Controls.Add(this.cbPadding);
             this.Controls.Add(this.btSmooth);
@@ -834,6 +877,10 @@
         private System.Windows.Forms.Button btSmooth;
         private System.Windows.Forms.ComboBox cbPadding;
         private System.Windows.Forms.Button btPadding;
+        private System.Windows.Forms.Button btPrewitt;
+        private System.Windows.Forms.Button btSobel;
+        private System.Windows.Forms.Button btLaplace1;
+        private System.Windows.Forms.Button btLaplace2;
     }
 }
 
