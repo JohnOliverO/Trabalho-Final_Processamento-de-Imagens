@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btCarregarImagem = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -93,6 +93,14 @@
             this.btSobel = new System.Windows.Forms.Button();
             this.btLaplace1 = new System.Windows.Forms.Button();
             this.btLaplace2 = new System.Windows.Forms.Button();
+            this.btDilatation = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btErosion = new System.Windows.Forms.Button();
+            this.btOpening = new System.Windows.Forms.Button();
+            this.btClosing = new System.Windows.Forms.Button();
+            this.btContour = new System.Windows.Forms.Button();
+            this.btExternalContour = new System.Windows.Forms.Button();
+            this.btMorphologicalGradient = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -107,6 +115,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.chHistogram1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chHistogram2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOrder)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btCarregarImagem
@@ -580,32 +589,32 @@
             // 
             // chHistogram1
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chHistogram1.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chHistogram1.Legends.Add(legend3);
+            chartArea1.Name = "ChartArea1";
+            this.chHistogram1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chHistogram1.Legends.Add(legend1);
             this.chHistogram1.Location = new System.Drawing.Point(6, 281);
             this.chHistogram1.Name = "chHistogram1";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chHistogram1.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chHistogram1.Series.Add(series1);
             this.chHistogram1.Size = new System.Drawing.Size(448, 127);
             this.chHistogram1.TabIndex = 39;
             this.chHistogram1.Text = "chart1";
             // 
             // chHistogram2
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chHistogram2.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chHistogram2.Legends.Add(legend4);
+            chartArea2.Name = "ChartArea1";
+            this.chHistogram2.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chHistogram2.Legends.Add(legend2);
             this.chHistogram2.Location = new System.Drawing.Point(6, 410);
             this.chHistogram2.Name = "chHistogram2";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chHistogram2.Series.Add(series4);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chHistogram2.Series.Add(series2);
             this.chHistogram2.Size = new System.Drawing.Size(448, 127);
             this.chHistogram2.TabIndex = 40;
             this.chHistogram2.Text = "chart2";
@@ -746,11 +755,91 @@
             this.btLaplace2.UseVisualStyleBackColor = true;
             this.btLaplace2.Click += new System.EventHandler(this.btLaplace2_Click);
             // 
+            // btDilatation
+            // 
+            this.btDilatation.Location = new System.Drawing.Point(0, 19);
+            this.btDilatation.Name = "btDilatation";
+            this.btDilatation.Size = new System.Drawing.Size(100, 23);
+            this.btDilatation.TabIndex = 54;
+            this.btDilatation.Text = "Dilatação";
+            this.btDilatation.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btMorphologicalGradient);
+            this.groupBox1.Controls.Add(this.btExternalContour);
+            this.groupBox1.Controls.Add(this.btContour);
+            this.groupBox1.Controls.Add(this.btClosing);
+            this.groupBox1.Controls.Add(this.btOpening);
+            this.groupBox1.Controls.Add(this.btErosion);
+            this.groupBox1.Controls.Add(this.btDilatation);
+            this.groupBox1.Location = new System.Drawing.Point(990, 410);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(200, 127);
+            this.groupBox1.TabIndex = 55;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Operações Morfológicas";
+            // 
+            // btErosion
+            // 
+            this.btErosion.Location = new System.Drawing.Point(100, 19);
+            this.btErosion.Name = "btErosion";
+            this.btErosion.Size = new System.Drawing.Size(100, 23);
+            this.btErosion.TabIndex = 55;
+            this.btErosion.Text = "Erosão";
+            this.btErosion.UseVisualStyleBackColor = true;
+            // 
+            // btOpening
+            // 
+            this.btOpening.Location = new System.Drawing.Point(0, 47);
+            this.btOpening.Name = "btOpening";
+            this.btOpening.Size = new System.Drawing.Size(100, 23);
+            this.btOpening.TabIndex = 56;
+            this.btOpening.Text = "Abertura";
+            this.btOpening.UseVisualStyleBackColor = true;
+            // 
+            // btClosing
+            // 
+            this.btClosing.Location = new System.Drawing.Point(100, 47);
+            this.btClosing.Name = "btClosing";
+            this.btClosing.Size = new System.Drawing.Size(100, 23);
+            this.btClosing.TabIndex = 57;
+            this.btClosing.Text = "Fechamento";
+            this.btClosing.UseVisualStyleBackColor = true;
+            // 
+            // btContour
+            // 
+            this.btContour.Location = new System.Drawing.Point(0, 76);
+            this.btContour.Name = "btContour";
+            this.btContour.Size = new System.Drawing.Size(100, 23);
+            this.btContour.TabIndex = 58;
+            this.btContour.Text = "Contorno";
+            this.btContour.UseVisualStyleBackColor = true;
+            // 
+            // btExternalContour
+            // 
+            this.btExternalContour.Location = new System.Drawing.Point(100, 76);
+            this.btExternalContour.Name = "btExternalContour";
+            this.btExternalContour.Size = new System.Drawing.Size(100, 23);
+            this.btExternalContour.TabIndex = 59;
+            this.btExternalContour.Text = "Contorno externo";
+            this.btExternalContour.UseVisualStyleBackColor = true;
+            // 
+            // btMorphologicalGradient
+            // 
+            this.btMorphologicalGradient.Location = new System.Drawing.Point(46, 105);
+            this.btMorphologicalGradient.Name = "btMorphologicalGradient";
+            this.btMorphologicalGradient.Size = new System.Drawing.Size(100, 23);
+            this.btMorphologicalGradient.TabIndex = 60;
+            this.btMorphologicalGradient.Text = "Gradiente morfológico";
+            this.btMorphologicalGradient.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1202, 549);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btLaplace2);
             this.Controls.Add(this.btLaplace1);
             this.Controls.Add(this.btSobel);
@@ -817,6 +906,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.chHistogram1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chHistogram2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOrder)).EndInit();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -881,6 +971,14 @@
         private System.Windows.Forms.Button btSobel;
         private System.Windows.Forms.Button btLaplace1;
         private System.Windows.Forms.Button btLaplace2;
+        private System.Windows.Forms.Button btDilatation;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btErosion;
+        private System.Windows.Forms.Button btMorphologicalGradient;
+        private System.Windows.Forms.Button btExternalContour;
+        private System.Windows.Forms.Button btContour;
+        private System.Windows.Forms.Button btClosing;
+        private System.Windows.Forms.Button btOpening;
     }
 }
 

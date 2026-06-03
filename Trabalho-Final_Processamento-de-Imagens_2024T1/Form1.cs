@@ -6,13 +6,14 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Runtime.ConstrainedExecution;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using static System.Net.Mime.MediaTypeNames;
-//
+
 namespace ImageLoader
 {
     public partial class Form1 : Form
@@ -1169,6 +1170,128 @@ namespace ImageLoader
             return image3;
         }
 
+        int[,] Mask =
+        {
+            {0, 255, 0},
+            {255, 255, 255},
+            {0, 255, 0}
+        };
+
+        Bitmap Dilatation_Image(Bitmap image1)
+        {
+            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+
+            Bitmap binary1 = BinarizarImagem(image1);
+
+            for (int i = 0; i < image1.Width; i++)
+            {
+                for (int j = 0; j < image1.Height; j++)
+                {
+                    if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
+                    {
+                        image3.SetPixel(i, j, Color.Black);
+                    }
+                    else
+                    {
+                        bool Tem = false;
+
+                        for (int k = 0; k < Mask.GetLength(0); k++)
+                        {
+                            for (int l = 0; l < Mask.GetLength(1); l++)
+                            {
+                                Color pixel = binary1.GetPixel(i - 1 + k, j - 1 + l);
+
+                                if (pixel.R == 255 && Mask[k, l] == 255)
+                                {
+                                    Tem = true;
+                                    break;
+                                }
+                            }
+                            if (Tem)
+                                break;
+                        }
+                        if (Tem)
+                        {
+                            image3.SetPixel(i, j, Color.White);
+                        }
+                        else
+                        {
+                            image3.SetPixel(i, j, Color.Black);
+                        }
+                    }
+                }
+            }
+            return image3;
+        }
+        Bitmap Erosion_Image(Bitmap image1)
+        {
+            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+
+            Bitmap binary1 = BinarizarImagem(image1);
+
+            for (int i = 0; i < image1.Width; i++)
+            {
+                for (int j = 0; j < image1.Height; j++)
+                {
+                    if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
+                    {
+                        image3.SetPixel(i, j, Color.Black);
+                    }
+                    else
+                    {
+                        bool Tem = true;
+
+                        for (int k = 0; k < Mask.GetLength(0); k++)
+                        {
+                            for (int l = 0; l < Mask.GetLength(1); l++)
+                            {
+                                Color pixel = binary1.GetPixel(i - 1 + k, j - 1 + l);
+
+                                if (pixel.R == 0 && Mask[k, l] == 255)
+                                {
+                                    Tem = false;
+                                    break;
+                                }
+                            }
+                            if (!Tem)
+                                break;
+                        }
+                        if (Tem)
+                        {
+                            image3.SetPixel(i, j, Color.White);
+                        }
+                        else
+                        {
+                            image3.SetPixel(i, j, Color.Black);
+                        }
+                    }
+                }
+            }
+            return image3;
+        }
+        Bitmap Opening_Image(Bitmap image1)
+        {
+            return Dilatation_Image(Erosion_Image(image1));
+        }
+        Bitmap Closing_Image(Bitmap image1)
+        {
+            return Erosion_Image(Dilatation_Image(image1));
+        }
+        Bitmap Contour_Image(Bitmap image1)
+        {
+            return Sub_Image(image1, Erosion_Image(image1));
+        }
+        Bitmap ExternalContour_Image(Bitmap image1)
+        {
+            return Sub_Image(Dilatation_Image(image1), image1);
+        }
+        Bitmap MorphologicalGradient_Image(Bitmap image1)
+        {
+            return Sub_Image(
+                Dilatation_Image(image1),
+                Erosion_Image(image1)
+            );
+        }
 
         /*==============================================================================================================================================================================
         Botões
@@ -2319,7 +2442,5 @@ namespace ImageLoader
 
             chHistogram2.Series.Add(serie);
         }
-
-        
     }
 }
