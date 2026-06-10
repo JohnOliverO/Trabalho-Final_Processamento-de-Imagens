@@ -59,7 +59,7 @@
             this.Tx_Resolution2 = new System.Windows.Forms.Label();
             this.Image_Frame_3 = new System.Windows.Forms.GroupBox();
             this.Tx_Resolution3 = new System.Windows.Forms.Label();
-            this.Overlay_Img = new System.Windows.Forms.Button();
+            this.btOverlay = new System.Windows.Forms.Button();
             this.btFlipR = new System.Windows.Forms.Button();
             this.btFlipUpDown = new System.Windows.Forms.Button();
             this.btGray = new System.Windows.Forms.Button();
@@ -95,12 +95,13 @@
             this.btLaplace2 = new System.Windows.Forms.Button();
             this.btDilatation = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btErosion = new System.Windows.Forms.Button();
-            this.btOpening = new System.Windows.Forms.Button();
-            this.btClosing = new System.Windows.Forms.Button();
-            this.btContour = new System.Windows.Forms.Button();
-            this.btExternalContour = new System.Windows.Forms.Button();
             this.btMorphologicalGradient = new System.Windows.Forms.Button();
+            this.btExternalContour = new System.Windows.Forms.Button();
+            this.btContour = new System.Windows.Forms.Button();
+            this.btClosing = new System.Windows.Forms.Button();
+            this.btOpening = new System.Windows.Forms.Button();
+            this.btErosion = new System.Windows.Forms.Button();
+            this.nudPadding = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -116,6 +117,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.chHistogram2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOrder)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPadding)).BeginInit();
             this.SuspendLayout();
             // 
             // btCarregarImagem
@@ -381,14 +383,15 @@
             this.Tx_Resolution3.TabIndex = 40;
             this.Tx_Resolution3.Text = "0x0";
             // 
-            // Overlay_Img
+            // btOverlay
             // 
-            this.Overlay_Img.Location = new System.Drawing.Point(739, 12);
-            this.Overlay_Img.Name = "Overlay_Img";
-            this.Overlay_Img.Size = new System.Drawing.Size(163, 37);
-            this.Overlay_Img.TabIndex = 20;
-            this.Overlay_Img.Text = "Sobrepor";
-            this.Overlay_Img.UseVisualStyleBackColor = true;
+            this.btOverlay.Location = new System.Drawing.Point(739, 12);
+            this.btOverlay.Name = "btOverlay";
+            this.btOverlay.Size = new System.Drawing.Size(163, 37);
+            this.btOverlay.TabIndex = 20;
+            this.btOverlay.Text = "Sobrepor";
+            this.btOverlay.UseVisualStyleBackColor = true;
+            this.btOverlay.Click += new System.EventHandler(this.btOverlay_Click);
             // 
             // btFlipR
             // 
@@ -700,6 +703,12 @@
             // 
             this.cbPadding.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cbPadding.FormattingEnabled = true;
+            this.cbPadding.Items.AddRange(new object[] {
+            "Zero",
+            "Replicate",
+            "Reflect",
+            "Mirror",
+            "Wrap"});
             this.cbPadding.Location = new System.Drawing.Point(584, 482);
             this.cbPadding.Name = "cbPadding";
             this.cbPadding.Size = new System.Drawing.Size(58, 21);
@@ -763,6 +772,7 @@
             this.btDilatation.TabIndex = 54;
             this.btDilatation.Text = "Dilatação";
             this.btDilatation.UseVisualStyleBackColor = true;
+            this.btDilatation.Click += new System.EventHandler(this.btDilatation_Click);
             // 
             // groupBox1
             // 
@@ -780,41 +790,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Operações Morfológicas";
             // 
-            // btErosion
+            // btMorphologicalGradient
             // 
-            this.btErosion.Location = new System.Drawing.Point(100, 19);
-            this.btErosion.Name = "btErosion";
-            this.btErosion.Size = new System.Drawing.Size(100, 23);
-            this.btErosion.TabIndex = 55;
-            this.btErosion.Text = "Erosão";
-            this.btErosion.UseVisualStyleBackColor = true;
-            // 
-            // btOpening
-            // 
-            this.btOpening.Location = new System.Drawing.Point(0, 47);
-            this.btOpening.Name = "btOpening";
-            this.btOpening.Size = new System.Drawing.Size(100, 23);
-            this.btOpening.TabIndex = 56;
-            this.btOpening.Text = "Abertura";
-            this.btOpening.UseVisualStyleBackColor = true;
-            // 
-            // btClosing
-            // 
-            this.btClosing.Location = new System.Drawing.Point(100, 47);
-            this.btClosing.Name = "btClosing";
-            this.btClosing.Size = new System.Drawing.Size(100, 23);
-            this.btClosing.TabIndex = 57;
-            this.btClosing.Text = "Fechamento";
-            this.btClosing.UseVisualStyleBackColor = true;
-            // 
-            // btContour
-            // 
-            this.btContour.Location = new System.Drawing.Point(0, 76);
-            this.btContour.Name = "btContour";
-            this.btContour.Size = new System.Drawing.Size(100, 23);
-            this.btContour.TabIndex = 58;
-            this.btContour.Text = "Contorno";
-            this.btContour.UseVisualStyleBackColor = true;
+            this.btMorphologicalGradient.Location = new System.Drawing.Point(46, 105);
+            this.btMorphologicalGradient.Name = "btMorphologicalGradient";
+            this.btMorphologicalGradient.Size = new System.Drawing.Size(100, 23);
+            this.btMorphologicalGradient.TabIndex = 60;
+            this.btMorphologicalGradient.Text = "Gradiente morfológico";
+            this.btMorphologicalGradient.UseVisualStyleBackColor = true;
+            this.btMorphologicalGradient.Click += new System.EventHandler(this.btMorphologicalGradient_Click);
             // 
             // btExternalContour
             // 
@@ -824,21 +808,71 @@
             this.btExternalContour.TabIndex = 59;
             this.btExternalContour.Text = "Contorno externo";
             this.btExternalContour.UseVisualStyleBackColor = true;
+            this.btExternalContour.Click += new System.EventHandler(this.btExternalContour_Click);
             // 
-            // btMorphologicalGradient
+            // btContour
             // 
-            this.btMorphologicalGradient.Location = new System.Drawing.Point(46, 105);
-            this.btMorphologicalGradient.Name = "btMorphologicalGradient";
-            this.btMorphologicalGradient.Size = new System.Drawing.Size(100, 23);
-            this.btMorphologicalGradient.TabIndex = 60;
-            this.btMorphologicalGradient.Text = "Gradiente morfológico";
-            this.btMorphologicalGradient.UseVisualStyleBackColor = true;
+            this.btContour.Location = new System.Drawing.Point(0, 76);
+            this.btContour.Name = "btContour";
+            this.btContour.Size = new System.Drawing.Size(100, 23);
+            this.btContour.TabIndex = 58;
+            this.btContour.Text = "Contorno";
+            this.btContour.UseVisualStyleBackColor = true;
+            this.btContour.Click += new System.EventHandler(this.btContour_Click);
+            // 
+            // btClosing
+            // 
+            this.btClosing.Location = new System.Drawing.Point(100, 47);
+            this.btClosing.Name = "btClosing";
+            this.btClosing.Size = new System.Drawing.Size(100, 23);
+            this.btClosing.TabIndex = 57;
+            this.btClosing.Text = "Fechamento";
+            this.btClosing.UseVisualStyleBackColor = true;
+            this.btClosing.Click += new System.EventHandler(this.btClosing_Click);
+            // 
+            // btOpening
+            // 
+            this.btOpening.Location = new System.Drawing.Point(0, 47);
+            this.btOpening.Name = "btOpening";
+            this.btOpening.Size = new System.Drawing.Size(100, 23);
+            this.btOpening.TabIndex = 56;
+            this.btOpening.Text = "Abertura";
+            this.btOpening.UseVisualStyleBackColor = true;
+            this.btOpening.Click += new System.EventHandler(this.btOpening_Click);
+            // 
+            // btErosion
+            // 
+            this.btErosion.Location = new System.Drawing.Point(100, 19);
+            this.btErosion.Name = "btErosion";
+            this.btErosion.Size = new System.Drawing.Size(100, 23);
+            this.btErosion.TabIndex = 55;
+            this.btErosion.Text = "Erosão";
+            this.btErosion.UseVisualStyleBackColor = true;
+            this.btErosion.Click += new System.EventHandler(this.btErosion_Click);
+            // 
+            // nudPadding
+            // 
+            this.nudPadding.Location = new System.Drawing.Point(479, 509);
+            this.nudPadding.Maximum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            0});
+            this.nudPadding.Name = "nudPadding";
+            this.nudPadding.Size = new System.Drawing.Size(33, 20);
+            this.nudPadding.TabIndex = 56;
+            this.nudPadding.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1202, 549);
+            this.Controls.Add(this.nudPadding);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btLaplace2);
             this.Controls.Add(this.btLaplace1);
@@ -873,7 +907,7 @@
             this.Controls.Add(this.btGray);
             this.Controls.Add(this.btFlipUpDown);
             this.Controls.Add(this.btFlipR);
-            this.Controls.Add(this.Overlay_Img);
+            this.Controls.Add(this.btOverlay);
             this.Controls.Add(this.Image_Frame_3);
             this.Controls.Add(this.Image_Frame_2);
             this.Controls.Add(this.Image_Frame_1);
@@ -907,6 +941,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.chHistogram2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOrder)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nudPadding)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -934,7 +969,7 @@
         private System.Windows.Forms.GroupBox Image_Frame_1;
         private System.Windows.Forms.GroupBox Image_Frame_2;
         private System.Windows.Forms.GroupBox Image_Frame_3;
-        private System.Windows.Forms.Button Overlay_Img;
+        private System.Windows.Forms.Button btOverlay;
         private System.Windows.Forms.Button btFlipR;
         private System.Windows.Forms.Button btFlipUpDown;
         private System.Windows.Forms.Button btGray;
@@ -979,6 +1014,7 @@
         private System.Windows.Forms.Button btContour;
         private System.Windows.Forms.Button btClosing;
         private System.Windows.Forms.Button btOpening;
+        private System.Windows.Forms.NumericUpDown nudPadding;
     }
 }
 

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ImageLoader
 {
@@ -37,6 +38,10 @@ namespace ImageLoader
         byte[,] vImg1G;
         byte[,] vImg1B;
         byte[,] vImg1A;
+
+        int[,] Mask;
+
+        int[,] StructuringElement;
 
         enum PaddingMode
         {
@@ -69,123 +74,6 @@ namespace ImageLoader
                 Tx_Resolution3.Text = $"{pictureBox3.Image.Width}x{pictureBox3.Image.Height}";
             }
         }
-        private void btCarregarImagem_Click(object sender, EventArgs e)
-        {
-            // Configurações iniciais da OpenFileDialogBox
-            var filePath = string.Empty;
-            openFileDialog1.InitialDirectory = "C:\\Matlab";
-            openFileDialog1.Filter = "TIFF image (*.tif)|*.tif|JPG image (*.jpg)|*.jpg|BMP image (*.bmp)|*.bmp|PNG image (*.png)|*.png|All files (*.*)|*.*";
-            openFileDialog1.FilterIndex = 5;
-            openFileDialog1.RestoreDirectory = true;
-
-            // Se um arquivo foi localizado com sucesso...
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                // Armazena o path do arquivo de imagem
-                filePath = openFileDialog1.FileName;
-
-
-                bool bLoadImgOK = false;
-                try
-                {
-                    img1 = new Bitmap(filePath);
-                    bLoadImgOK = true;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Erro ao abrir imagem...", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    bLoadImgOK = false;
-                }
-
-                // Se a imagem carregou perfeitamente...
-                if (bLoadImgOK == true)
-                {
-                    // Adiciona imagem na PictureBox
-                    pictureBox1.Image = img1;
-                    Tx_Resolution_Update();
-                }
-
-            }
-        }
-
-        private void btSalvarImagem_Click(object sender, EventArgs e)
-        {
-            if (img3 == null)
-                return;
-
-            // Configurações iniciais da saveFileDialog1
-            var filePath = string.Empty;
-            saveFileDialog1.InitialDirectory = "c:\\";
-            saveFileDialog1.Filter = "TIFF image (*.tif)|*.tif|JPG image (*.jpg)|*.jpg|BMP image (*.bmp)|*.bmp|PNG image (*.png)|*.png|All files (*.*)|*.*";
-            saveFileDialog1.FilterIndex = 2;
-            saveFileDialog1.RestoreDirectory = true;
-
-
-            ImageFormat format = img3.RawFormat;
-
-            if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                string ext = System.IO.Path.GetExtension(saveFileDialog1.FileName);
-                switch (ext)
-                {
-                    case ".jpg":
-                        format = ImageFormat.Jpeg;
-                        break;
-                    case ".bmp":
-                        format = ImageFormat.Bmp;
-                        break;
-                    case ".tif":
-                        format = ImageFormat.Tiff;
-                        break;
-                    case ".png":
-                        format = ImageFormat.Png;
-                        break;
-                }
-
-                //pictureBox3.Image.Save(saveFileDialog1.FileName, format);
-                img3.Save(saveFileDialog1.FileName, format);
-            }
-        }
-
-        private void btCarregarImagem2_Click(object sender, EventArgs e)
-        {
-            // Configurações iniciais da OpenFileDialogBox
-            var filePath = string.Empty;
-            openFileDialog1.InitialDirectory = "C:\\Matlab";
-            openFileDialog1.Filter = "TIFF image (*.tif)|*.tif|JPG image (*.jpg)|*.jpg|BMP image (*.bmp)|*.bmp|PNG image (*.png)|*.png|All files (*.*)|*.*";
-            openFileDialog1.FilterIndex = 5;
-            openFileDialog1.RestoreDirectory = true;
-
-            // Se um arquivo foi localizado com sucesso...
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                // Armazena o path do arquivo de imagem
-                filePath = openFileDialog1.FileName;
-
-
-                bool bLoadImgOK = false;
-                try
-                {
-                    img2 = new Bitmap(filePath);
-                    bLoadImgOK = true;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Erro ao abrir imagem...", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    bLoadImgOK = false;
-                }
-
-                // Se a imagem carregou perfeitamente...
-                if (bLoadImgOK == true)
-                {
-                    // Adiciona imagem na PictureBox
-                    pictureBox2.Image = img2;
-                    Tx_Resolution_Update();
-                }
-
-            }
-        }
-
         void Resolution_Verification(Bitmap image1, Bitmap image2)
         {
             if (image1.Width != image2.Width || image1.Height != image2.Height)
@@ -214,109 +102,197 @@ namespace ImageLoader
 
             return newImage;
         }
-        Bitmap AddPaddingToImage(Bitmap image, int numero, PaddingMode mode)
+        Bitmap Crop_Image_Edges(Bitmap image, int left, int right, int top, int bottom)
         {
-            switch (mode)
+            if (left < 0 || right < 0 || top < 0 || bottom < 0)
+                throw new ArgumentException("Os valores de corte não podem ser negativos.");
+
+            int newWidth = image.Width - left - right;
+            int newHeight = image.Height - top - bottom;
+
+            if (newWidth <= 0 || newHeight <= 0)
+                throw new ArgumentException("Os valores de corte são maiores que o tamanho da imagem.");
+
+            Bitmap newImage = new Bitmap(newWidth, newHeight);
+
+            for (int i = 0; i < newWidth; i++)
+            {
+                for (int j = 0; j < newHeight; j++)
+                {
+                    Color pixel = image.GetPixel(i + left, j + top);
+                    newImage.SetPixel(i, j, pixel);
+                }
+            }
+
+            return newImage;
+        }
+        Bitmap Add_Padding_To_Image(Bitmap image, int numero, string mode)
+        {
+            if (!Enum.TryParse<PaddingMode>(mode, true, out PaddingMode paddingMode))
+                throw new ArgumentException("Modo de padding inválido.");
+
+            switch (paddingMode)
             {
                 case PaddingMode.Zero:
-                    return PadImageWithZeros(image, numero);
+                    return PadImage_With_Zeros(image, numero);
 
                 case PaddingMode.Replicate:
-                    return PadImageReplicateEdges(image, numero);
+                    return PadImage_Replicate_Edges(image, numero);
 
                 case PaddingMode.Reflect:
-                    return PadImageReflect(image, numero);
+                    return PadImage_Reflect(image, numero);
 
                 case PaddingMode.Mirror:
-                    return PadImageMirror(image, numero);
+                    return PadImage_Mirror(image, numero);
 
                 case PaddingMode.Wrap:
-                    return PadImageWrap(image, numero);
+                    return PadImage_Wrap(image, numero);
 
                 default:
-                    throw new ArgumentException("Modo de padding inválido");
+                    throw new ArgumentException("Modo de padding inválido.");
             }
         }
-        Bitmap PadImageWithZeros(Bitmap image, int numero)
+        Bitmap PadImage_With_Zeros(Bitmap image, int numero)
         {
             int newWidth = image.Width + numero * 2;
             int newHeight = image.Height + numero * 2;
 
             Bitmap newImage = new Bitmap(newWidth, newHeight);
 
-            for (int i = 0; i < image.Width; i++)
+            for (int i = 0; i < newWidth; i++)
             {
-                for (int j = 0; j < image.Height; j++)
+                for (int j = 0; j < newHeight; j++)
                 {
-                    newImage.SetPixel(i + numero, j + numero, image.GetPixel(i, j));
+                    int srcI = i - numero;
+                    int srcJ = j - numero;
+
+                    if (srcI >= 0 && srcI < image.Width &&
+                        srcJ >= 0 && srcJ < image.Height)
+                    {
+                        newImage.SetPixel(i, j, image.GetPixel(srcI, srcJ));
+                    }
+                    else
+                    {
+                        newImage.SetPixel(i, j, Color.Black);
+                    }
                 }
             }
 
             return newImage;
         }
-        Bitmap PadImageReplicateEdges(Bitmap image, int numero)
+        Bitmap PadImage_Replicate_Edges(Bitmap image, int numero)
         {
             int newWidth = image.Width + numero * 2;
             int newHeight = image.Height + numero * 2;
 
             Bitmap newImage = new Bitmap(newWidth, newHeight);
 
-            for (int i = 0; i < image.Width; i++)
+            for (int i = 0; i < newWidth; i++)
             {
-                for (int j = 0; j < image.Height; j++)
+                for (int j = 0; j < newHeight; j++)
                 {
-                    newImage.SetPixel(i + numero, j + numero, image.GetPixel(i, j));
+                    int srcX = i - numero;
+                    int srcY = j - numero;
+
+                    srcX = Math.Max(0, Math.Min(srcX, image.Width - 1));
+                    srcY = Math.Max(0, Math.Min(srcY, image.Height - 1));
+
+                    newImage.SetPixel(i, j, image.GetPixel(srcX, srcY));
                 }
             }
 
             return newImage;
         }
-        Bitmap PadImageReflect(Bitmap image, int numero)
+        Bitmap PadImage_Reflect(Bitmap image, int numero)
         {
             int newWidth = image.Width + numero * 2;
             int newHeight = image.Height + numero * 2;
 
             Bitmap newImage = new Bitmap(newWidth, newHeight);
 
-            for (int i = 0; i < image.Width; i++)
+            for (int i = 0; i < newWidth; i++)
             {
-                for (int j = 0; j < image.Height; j++)
+                for (int j = 0; j < newHeight; j++)
                 {
-                    newImage.SetPixel(i + numero, j + numero, image.GetPixel(i, j));
+                    int srcX = i - numero;
+                    int srcY = j - numero;
+
+                    while (srcX < 0 || srcX >= image.Width)
+                    {
+                        if (srcX < 0)
+                            srcX = -srcX;
+                        else
+                            srcX = 2 * image.Width - srcX - 2;
+                    }
+
+                    while (srcY < 0 || srcY >= image.Height)
+                    {
+                        if (srcY < 0)
+                            srcY = -srcY;
+                        else
+                            srcY = 2 * image.Height - srcY - 2;
+                    }
+
+                    newImage.SetPixel(i, j, image.GetPixel(srcX, srcY));
                 }
             }
 
             return newImage;
         }
-        Bitmap PadImageMirror(Bitmap image, int numero)
+        Bitmap PadImage_Mirror(Bitmap image, int numero)
         {
             int newWidth = image.Width + numero * 2;
             int newHeight = image.Height + numero * 2;
 
             Bitmap newImage = new Bitmap(newWidth, newHeight);
 
-            for (int i = 0; i < image.Width; i++)
+            for (int i = 0; i < newWidth; i++)
             {
-                for (int j = 0; j < image.Height; j++)
+                for (int j = 0; j < newHeight; j++)
                 {
-                    newImage.SetPixel(i + numero, j + numero, image.GetPixel(i, j));
+                    int srcX = i - numero;
+                    int srcY = j - numero;
+
+                    while (srcX < 0 || srcX >= image.Width)
+                    {
+                        if (srcX < 0)
+                            srcX = -srcX - 1;
+                        else
+                            srcX = 2 * image.Width - srcX - 1;
+                    }
+
+                    while (srcY < 0 || srcY >= image.Height)
+                    {
+                        if (srcY < 0)
+                            srcY = -srcY - 1;
+                        else
+                            srcY = 2 * image.Height - srcY - 1;
+                    }
+
+                    newImage.SetPixel(i, j, image.GetPixel(srcX, srcY));
                 }
             }
 
             return newImage;
         }
-        Bitmap PadImageWrap(Bitmap image, int numero)
+        Bitmap PadImage_Wrap(Bitmap image, int numero)
         {
             int newWidth = image.Width + numero * 2;
             int newHeight = image.Height + numero * 2;
 
             Bitmap newImage = new Bitmap(newWidth, newHeight);
 
-            for (int i = 0; i < image.Width; i++)
+            for (int i = 0; i < newWidth; i++)
             {
-                for (int j = 0; j < image.Height; j++)
+                for (int j = 0; j < newHeight; j++)
                 {
-                    newImage.SetPixel(i + numero, j + numero, image.GetPixel(i, j));
+                    int srcX = i - numero;
+                    int srcY = j - numero;
+
+                    srcX = ((srcX % image.Width) + image.Width) % image.Width;
+                    srcY = ((srcY % image.Height) + image.Height) % image.Height;
+
+                    newImage.SetPixel(i, j, image.GetPixel(srcX, srcY));
                 }
             }
 
@@ -326,7 +302,7 @@ namespace ImageLoader
         {
             Resolution_Verification(image1, image2);
 
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             for (int i = 0; i < image1.Width; i++)
             {
@@ -342,16 +318,16 @@ namespace ImageLoader
 
                     Color cor = Color.FromArgb(A,R,G,B);
 
-                    image3.SetPixel(i, j, cor);
+                    newImage.SetPixel(i, j, cor);
                 }
             }
-            return image3;
+            return newImage;
         }
         Bitmap Sub_Image(Bitmap image1, Bitmap image2)
         {
             Resolution_Verification(image1, image2);
 
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             for (int i = 0; i < image1.Width; i++)
             {
@@ -367,14 +343,14 @@ namespace ImageLoader
 
                     Color cor = Color.FromArgb(A, R, G, B);
 
-                    image3.SetPixel(i, j, cor);
+                    newImage.SetPixel(i, j, cor);
                 }
             }
-            return image3;
+            return newImage;
         }
         Bitmap Add_Brightness_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             for (int i = 0; i < image1.Width; i++)
             {
@@ -389,14 +365,14 @@ namespace ImageLoader
 
                     Color cor = Color.FromArgb(A, R, G, B);
 
-                    image3.SetPixel(i, j, cor);
+                    newImage.SetPixel(i, j, cor);
                 }
             }
-            return image3;
+            return newImage;
         }
         Bitmap Sub_Brightness_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             for (int i = 0; i < image1.Width; i++)
             {
@@ -411,14 +387,14 @@ namespace ImageLoader
 
                     Color cor = Color.FromArgb(A, R, G, B);
 
-                    image3.SetPixel(i, j, cor);
+                    newImage.SetPixel(i, j, cor);
                 }
             }
-            return image3;
+            return newImage;
         }
         Bitmap Mult_Brightness_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             for (int i = 0; i < image1.Width; i++)
             {
@@ -433,14 +409,14 @@ namespace ImageLoader
 
                     Color cor = Color.FromArgb(A, R, G, B);
 
-                    image3.SetPixel(i, j, cor);
+                    newImage.SetPixel(i, j, cor);
                 }
             }
-            return image3;
+            return newImage;
         }
         Bitmap Div_Brightness_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             for (int i = 0; i < image1.Width; i++)
             {
@@ -466,15 +442,15 @@ namespace ImageLoader
 
                     Color cor = Color.FromArgb(A, R, G, B);
 
-                    image3.SetPixel(i, j, cor);
+                    newImage.SetPixel(i, j, cor);
                 }
             }
 
-            return image3;
+            return newImage;
         }
         Bitmap Flip_90_Right_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Height, image1.Width);
+            Bitmap newImage = new Bitmap(image1.Height, image1.Width);
 
             for (int i = 0; i < image1.Width; i++)
             {
@@ -482,15 +458,15 @@ namespace ImageLoader
                 {
                     Color pixel = image1.GetPixel(i, j);
 
-                    image3.SetPixel(image1.Height - j - 1, i, pixel);
+                    newImage.SetPixel(image1.Height - j - 1, i, pixel);
                 }
             }
 
-            return image3;
+            return newImage;
         }
         Bitmap Flip_90_Left_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Height, image1.Width);
+            Bitmap newImage = new Bitmap(image1.Height, image1.Width);
 
             for (int i = 0; i < image1.Width; i++)
             {
@@ -498,15 +474,15 @@ namespace ImageLoader
                 {
                     Color pixel = image1.GetPixel(i, j);
 
-                    image3.SetPixel(j, image1.Width - i - 1, pixel);
+                    newImage.SetPixel(j, image1.Width - i - 1, pixel);
                 }
             }
 
-            return image3;
+            return newImage;
         }
         Bitmap Flip_Horizontal_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             for (int i = 0; i < image1.Width; i++)
             {
@@ -514,15 +490,15 @@ namespace ImageLoader
                 {
                     Color pixel = image1.GetPixel(i, j);
 
-                    image3.SetPixel(image1.Width - i - 1, j, pixel);
+                    newImage.SetPixel(image1.Width - i - 1, j, pixel);
                 }
             }
 
-            return image3;
+            return newImage;
         }
         Bitmap Flip_Vertical_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             for (int i = 0; i < image1.Width; i++)
             {
@@ -530,15 +506,15 @@ namespace ImageLoader
                 {
                     Color pixel = image1.GetPixel(i, j);
 
-                    image3.SetPixel(i, image1.Height - j - 1, pixel);
+                    newImage.SetPixel(i, image1.Height - j - 1, pixel);
                 }
             }
 
-            return image3;
+            return newImage;
         }
         Bitmap GrayScale_Average_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             for (int i = 0; i < image1.Width; i++)
             {
@@ -550,15 +526,15 @@ namespace ImageLoader
 
                     Color escala = Color.FromArgb(pixel.A, value, value, value);
 
-                    image3.SetPixel(i, j, escala);
+                    newImage.SetPixel(i, j, escala);
                 }
             }
 
-            return image3;
+            return newImage;
         }
         Bitmap GrayScale_Luminance_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             for (int i = 0; i < image1.Width; i++)
             {
@@ -570,17 +546,17 @@ namespace ImageLoader
 
                     Color escala = Color.FromArgb(pixel.A, value, value, value);
 
-                    image3.SetPixel(i, j, escala);
+                    newImage.SetPixel(i, j, escala);
                 }
             }
 
-            return image3;
+            return newImage;
         }
         Bitmap Difference_Image(Bitmap image1, Bitmap image2)
         {
             Resolution_Verification(image1, image2);
 
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             for (int i = 0; i < image1.Width; i++)
             {
@@ -595,15 +571,15 @@ namespace ImageLoader
                     byte B = (byte)Math.Abs(pixel1.B - pixel2.B);
 
                     Color cor = Color.FromArgb(A, R, G, B);
-                    image3.SetPixel(i, j, cor);
+                    newImage.SetPixel(i, j, cor);
                 }
             }
 
-            return image3;
+            return newImage;
         }
         Bitmap Negative_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             for (int i = 0; i < image1.Width; i++)
             {
@@ -617,17 +593,17 @@ namespace ImageLoader
                         (byte)(255 - pixel.G),
                         (byte)(255 - pixel.B));
 
-                    image3.SetPixel(i, j, cor);
+                    newImage.SetPixel(i, j, cor);
                 }
             }
 
-            return image3;
+            return newImage;
         }
         Bitmap Blend_Image(Bitmap image1, Bitmap image2)
         {
             Resolution_Verification(image1, image2);
 
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             for (int i = 0; i < image1.Width; i++)
             {
@@ -643,14 +619,53 @@ namespace ImageLoader
 
                     Color cor = Color.FromArgb(A, R, G, B);
 
-                    image3.SetPixel(i, j, cor);
+                    newImage.SetPixel(i, j, cor);
                 }
             }
-            return image3;
+            return newImage;
+        }
+        Bitmap Overlay_Image(Bitmap image1, Bitmap image2)
+        {
+            Resolution_Verification(image1, image2);
+
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
+
+            for (int i = 0; i < image1.Width; i++)
+            {
+                for (int j = 0; j < image1.Height; j++)
+                {
+                    Color pixel1 = image1.GetPixel(i, j);
+                    Color pixel2 = image2.GetPixel(i, j);
+
+                    double alpha = pixel2.A / 255.0;
+
+                    byte R = (byte)(
+                        pixel2.R * alpha +
+                        pixel1.R * (1 - alpha));
+
+                    byte G = (byte)(
+                        pixel2.G * alpha +
+                        pixel1.G * (1 - alpha));
+
+                    byte B = (byte)(
+                        pixel2.B * alpha +
+                        pixel1.B * (1 - alpha));
+
+                    byte A = (byte)(
+                        pixel2.A +
+                        pixel1.A * (1 - alpha));
+
+                    Color cor = Color.FromArgb(A, R, G, B);
+
+                    newImage.SetPixel(i, j, cor);
+                }
+            }
+
+            return newImage;
         }
         Bitmap MEAN_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             image1 = GrayScale_Average_Image(image1);
 
@@ -660,7 +675,7 @@ namespace ImageLoader
                 {
                     if(i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
                     {
-                        image3.SetPixel(i, j, Color.Black);
+                        newImage.SetPixel(i, j, Color.Black);
                     }
                     else
                     {
@@ -678,15 +693,15 @@ namespace ImageLoader
 
                         Color cor = Color.FromArgb(255, media, media, media);
 
-                        image3.SetPixel(i, j, cor);
+                        newImage.SetPixel(i, j, cor);
                     }
                 }
             }
-            return image3;
+            return newImage;
         }
         Bitmap MAX_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             image1 = GrayScale_Average_Image(image1);
 
@@ -696,7 +711,7 @@ namespace ImageLoader
                 {
                     if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
                     {
-                        image3.SetPixel(i, j, Color.Black);
+                        newImage.SetPixel(i, j, Color.Black);
                     }
                     else
                     {
@@ -711,15 +726,15 @@ namespace ImageLoader
                         }
                         Color cor = Color.FromArgb(255, Max, Max, Max);
 
-                        image3.SetPixel(i, j, cor);
+                        newImage.SetPixel(i, j, cor);
                     }
                 }
             }
-            return image3;
+            return newImage;
         }
         Bitmap MIN_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             image1 = GrayScale_Average_Image(image1);
 
@@ -729,7 +744,7 @@ namespace ImageLoader
                 {
                     if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
                     {
-                        image3.SetPixel(i, j, Color.Black);
+                        newImage.SetPixel(i, j, Color.Black);
                     }
                     else
                     {
@@ -744,15 +759,15 @@ namespace ImageLoader
                         }
                         Color cor = Color.FromArgb(255, Min, Min, Min);
 
-                        image3.SetPixel(i, j, cor);
+                        newImage.SetPixel(i, j, cor);
                     }
                 }
             }
-            return image3;
+            return newImage;
         }
         Bitmap Median_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             image1 = GrayScale_Average_Image(image1);
 
@@ -762,7 +777,7 @@ namespace ImageLoader
                 {
                     if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
                     {
-                        image3.SetPixel(i, j, Color.Black);
+                        newImage.SetPixel(i, j, Color.Black);
                     }
                     else
                     {
@@ -783,17 +798,17 @@ namespace ImageLoader
 
                         Color cor = Color.FromArgb(255, matriz[4], matriz[4], matriz[4]);
 
-                        image3.SetPixel(i, j, cor);
+                        newImage.SetPixel(i, j, cor);
 
                     }
                     
                 }
             }
-            return image3;
+            return newImage;
         }
         Bitmap Order_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             image1 = GrayScale_Average_Image(image1);
 
@@ -803,7 +818,7 @@ namespace ImageLoader
                 {
                     if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
                     {
-                        image3.SetPixel(i, j, Color.Black);
+                        newImage.SetPixel(i, j, Color.Black);
                     }
                     else
                     {
@@ -825,17 +840,17 @@ namespace ImageLoader
 
                         Color cor = Color.FromArgb(255, matriz[ordem], matriz[ordem], matriz[ordem]);
 
-                        image3.SetPixel(i, j, cor);
+                        newImage.SetPixel(i, j, cor);
 
                     }
 
                 }
             }
-            return image3;
+            return newImage;
         }
         Bitmap Smooth_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             image1 = GrayScale_Average_Image(image1);
 
@@ -845,7 +860,7 @@ namespace ImageLoader
                 {
                     if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
                     {
-                        image3.SetPixel(i, j, Color.Black);
+                        newImage.SetPixel(i, j, Color.Black);
                     }
                     else
                     {
@@ -884,17 +899,72 @@ namespace ImageLoader
 
                         Color cor = Color.FromArgb(255, ancora, ancora, ancora);
 
-                        image3.SetPixel(i, j, cor);
+                        newImage.SetPixel(i, j, cor);
 
                     }
 
                 }
             }
-            return image3;
+            return newImage;
+        }
+        Bitmap Gaussian_Image(Bitmap image1)
+        {
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
+
+            int[,] kernel =
+            {
+                { 1, 2, 1 },
+                { 2, 4, 2 },
+                { 1, 2, 1 }
+            };  
+
+            int divisor = 16;
+
+            for (int i = 0; i < image1.Width; i++)
+            {
+                for (int j = 0; j < image1.Height; j++)
+                {
+                    if (i == 0 || j == 0 ||
+                        i == image1.Width - 1 ||
+                        j == image1.Height - 1)
+                    {
+                        newImage.SetPixel(i, j, image1.GetPixel(i, j));
+                    }
+                    else
+                    {
+                        int somaR = 0;
+                        int somaG = 0;
+                        int somaB = 0;
+
+                        for (int k = 0; k < 3; k++)
+                        {
+                            for (int l = 0; l < 3; l++)
+                            {
+                                Color pixel = image1.GetPixel(
+                                    i - 1 + k,
+                                    j - 1 + l);
+
+                                somaR += pixel.R * kernel[k, l];
+                                somaG += pixel.G * kernel[k, l];
+                                somaB += pixel.B * kernel[k, l];
+                            }
+                        }
+
+                        byte R = (byte)(somaR / divisor);
+                        byte G = (byte)(somaG / divisor);
+                        byte B = (byte)(somaB / divisor);
+
+                        newImage.SetPixel(i, j,
+                            Color.FromArgb(R, G, B));
+                    }
+                }
+            }
+
+            return newImage;
         }
         Bitmap Prewitt_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             image1 = GrayScale_Average_Image(image1);
 
@@ -904,7 +974,7 @@ namespace ImageLoader
                 {
                     if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
                     {
-                        image3.SetPixel(i, j, Color.Black);
+                        newImage.SetPixel(i, j, Color.Black);
                     }
                     else
                     {
@@ -945,17 +1015,17 @@ namespace ImageLoader
 
                         Color cor = Color.FromArgb(255, V, V, V);
 
-                        image3.SetPixel(i, j, cor);
+                        newImage.SetPixel(i, j, cor);
 
                     }
 
                 }
             }
-            return image3;
+            return newImage;
         }
         Bitmap Sobel_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             image1 = GrayScale_Average_Image(image1);
 
@@ -965,7 +1035,7 @@ namespace ImageLoader
                 {
                     if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
                     {
-                        image3.SetPixel(i, j, Color.Black);
+                        newImage.SetPixel(i, j, Color.Black);
                     }
                     else
                     {
@@ -1035,17 +1105,17 @@ namespace ImageLoader
 
                             Color cor = Color.FromArgb(255, V, V, V);
 
-                        image3.SetPixel(i, j, cor);
+                        newImage.SetPixel(i, j, cor);
 
                     }
 
                 }
             }
-            return image3;
+            return newImage;
         }
         Bitmap Laplace_Mask1_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             image1 = GrayScale_Average_Image(image1);
 
@@ -1055,7 +1125,7 @@ namespace ImageLoader
                 {
                     if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
                     {
-                        image3.SetPixel(i, j, Color.Black);
+                        newImage.SetPixel(i, j, Color.Black);
                     }
                     else
                     {
@@ -1101,17 +1171,17 @@ namespace ImageLoader
 
                         Color cor = Color.FromArgb(255, V, V, V);
 
-                        image3.SetPixel(i, j, cor);
+                        newImage.SetPixel(i, j, cor);
 
                     }
 
                 }
             }
-            return image3;
+            return newImage;
         }
         Bitmap Laplace_Mask2_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             image1 = GrayScale_Average_Image(image1);
 
@@ -1121,7 +1191,7 @@ namespace ImageLoader
                 {
                     if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
                     {
-                        image3.SetPixel(i, j, Color.Black);
+                        newImage.SetPixel(i, j, Color.Black);
                     }
                     else
                     {
@@ -1161,25 +1231,17 @@ namespace ImageLoader
 
                         Color cor = Color.FromArgb(255, V, V, V);
 
-                        image3.SetPixel(i, j, cor);
+                        newImage.SetPixel(i, j, cor);
 
                     }
 
                 }
             }
-            return image3;
+            return newImage;
         }
-
-        int[,] Mask =
-        {
-            {0, 255, 0},
-            {255, 255, 255},
-            {0, 255, 0}
-        };
-
         Bitmap Dilatation_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             Bitmap binary1 = BinarizarImagem(image1);
 
@@ -1189,7 +1251,7 @@ namespace ImageLoader
                 {
                     if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
                     {
-                        image3.SetPixel(i, j, Color.Black);
+                        newImage.SetPixel(i, j, Color.Black);
                     }
                     else
                     {
@@ -1212,20 +1274,20 @@ namespace ImageLoader
                         }
                         if (Tem)
                         {
-                            image3.SetPixel(i, j, Color.White);
+                            newImage.SetPixel(i, j, Color.White);
                         }
                         else
                         {
-                            image3.SetPixel(i, j, Color.Black);
+                            newImage.SetPixel(i, j, Color.Black);
                         }
                     }
                 }
             }
-            return image3;
+            return newImage;
         }
         Bitmap Erosion_Image(Bitmap image1)
         {
-            Bitmap image3 = new Bitmap(image1.Width, image1.Height);
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
             Bitmap binary1 = BinarizarImagem(image1);
 
@@ -1235,7 +1297,7 @@ namespace ImageLoader
                 {
                     if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
                     {
-                        image3.SetPixel(i, j, Color.Black);
+                        newImage.SetPixel(i, j, Color.Black);
                     }
                     else
                     {
@@ -1258,16 +1320,16 @@ namespace ImageLoader
                         }
                         if (Tem)
                         {
-                            image3.SetPixel(i, j, Color.White);
+                            newImage.SetPixel(i, j, Color.White);
                         }
                         else
                         {
-                            image3.SetPixel(i, j, Color.Black);
+                            newImage.SetPixel(i, j, Color.Black);
                         }
                     }
                 }
             }
-            return image3;
+            return newImage;
         }
         Bitmap Opening_Image(Bitmap image1)
         {
@@ -1296,7 +1358,120 @@ namespace ImageLoader
         /*==============================================================================================================================================================================
         Botões
         ===============================================================================================================================================================================*/
+        private void btCarregarImagem_Click(object sender, EventArgs e)
+        {
+            // Configurações iniciais da OpenFileDialogBox
+            var filePath = string.Empty;
+            openFileDialog1.InitialDirectory = "C:\\Matlab";
+            openFileDialog1.Filter = "TIFF image (*.tif)|*.tif|JPG image (*.jpg)|*.jpg|BMP image (*.bmp)|*.bmp|PNG image (*.png)|*.png|All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 5;
+            openFileDialog1.RestoreDirectory = true;
 
+            // Se um arquivo foi localizado com sucesso...
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                // Armazena o path do arquivo de imagem
+                filePath = openFileDialog1.FileName;
+
+
+                bool bLoadImgOK = false;
+                try
+                {
+                    img1 = new Bitmap(filePath);
+                    bLoadImgOK = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Erro ao abrir imagem...", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    bLoadImgOK = false;
+                }
+
+                // Se a imagem carregou perfeitamente...
+                if (bLoadImgOK == true)
+                {
+                    // Adiciona imagem na PictureBox
+                    pictureBox1.Image = img1;
+                    Tx_Resolution_Update();
+                }
+
+            }
+        }
+        private void btSalvarImagem_Click(object sender, EventArgs e)
+        {
+            if (img3 == null)
+                return;
+
+            // Configurações iniciais da saveFileDialog1
+            var filePath = string.Empty;
+            saveFileDialog1.InitialDirectory = "c:\\";
+            saveFileDialog1.Filter = "TIFF image (*.tif)|*.tif|JPG image (*.jpg)|*.jpg|BMP image (*.bmp)|*.bmp|PNG image (*.png)|*.png|All files (*.*)|*.*";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+
+
+            ImageFormat format = img3.RawFormat;
+
+            if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string ext = System.IO.Path.GetExtension(saveFileDialog1.FileName);
+                switch (ext)
+                {
+                    case ".jpg":
+                        format = ImageFormat.Jpeg;
+                        break;
+                    case ".bmp":
+                        format = ImageFormat.Bmp;
+                        break;
+                    case ".tif":
+                        format = ImageFormat.Tiff;
+                        break;
+                    case ".png":
+                        format = ImageFormat.Png;
+                        break;
+                }
+
+                //pictureBox3.Image.Save(saveFileDialog1.FileName, format);
+                img3.Save(saveFileDialog1.FileName, format);
+            }
+        }
+        private void btCarregarImagem2_Click(object sender, EventArgs e)
+        {
+            // Configurações iniciais da OpenFileDialogBox
+            var filePath = string.Empty;
+            openFileDialog1.InitialDirectory = "C:\\Matlab";
+            openFileDialog1.Filter = "TIFF image (*.tif)|*.tif|JPG image (*.jpg)|*.jpg|BMP image (*.bmp)|*.bmp|PNG image (*.png)|*.png|All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 5;
+            openFileDialog1.RestoreDirectory = true;
+
+            // Se um arquivo foi localizado com sucesso...
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                // Armazena o path do arquivo de imagem
+                filePath = openFileDialog1.FileName;
+
+
+                bool bLoadImgOK = false;
+                try
+                {
+                    img2 = new Bitmap(filePath);
+                    bLoadImgOK = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Erro ao abrir imagem...", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    bLoadImgOK = false;
+                }
+
+                // Se a imagem carregou perfeitamente...
+                if (bLoadImgOK == true)
+                {
+                    // Adiciona imagem na PictureBox
+                    pictureBox2.Image = img2;
+                    Tx_Resolution_Update();
+                }
+
+            }
+        }
         private void Somar_Img_Click(object sender, EventArgs e)
         {
             if (img1 == null)
@@ -1426,74 +1601,6 @@ namespace ImageLoader
                 MessageBox.Show(ex.Message);
             }
         }
-        /*
-        private void bt_Overlay_Click(object sender, EventArgs e)
-        {
-            img3 = new Bitmap(img1.Width, img1.Height);
-
-            vImg1A = new byte[img1.Width, img1.Height];
-            vImg1R = new byte[img1.Width, img1.Height];
-            vImg1G = new byte[img1.Width, img1.Height];
-            vImg1B = new byte[img1.Width, img1.Height];
-
-            for (int i = 0; i < img1.Width; i++)
-            {
-                for (int j = 0; j < img1.Height; j++)
-                {
-                    if (img1 == null)
-                    {
-                        MessageBox.Show("img1 está null");
-                        return;
-                    }
-                    if (img2 == null)
-                    {
-                        MessageBox.Show("img2 está null");
-                        return;
-                    }
-                    Color pixel = img1.GetPixel(i, j);
-                    Color pixel2 = img2.GetPixel(i, j);
-
-                    double alpha = Convert.ToDouble(pixel2.A) / 255;
-
-                    if (pixel2.R * alpha + pixel.R * (1 - alpha) > 255)
-                    {
-                        vImg1R[i, j] = 255;
-                    }
-                    else
-                    {
-                        vImg1R[i, j] = Convert.ToByte(pixel2.R * alpha + pixel.R * (1 - alpha));
-                    }
-                    if (pixel2.G * alpha + pixel.G * (1 - alpha) > 255)
-                    {
-                        vImg1G[i, j] = 255;
-                    }
-                    else
-                    {
-                        vImg1G[i, j] = Convert.ToByte(pixel2.G * alpha + pixel.G * (1 - alpha));
-                    }
-                    if (pixel2.B * alpha + pixel.B * (1 - alpha) > 255)
-                    {
-                        vImg1B[i, j] = 255;
-                    }
-                    else
-                    {
-                        vImg1B[i, j] = Convert.ToByte(pixel2.B * alpha + pixel.B * (1 - alpha));
-                    }
-
-                    Color cor = Color.FromArgb(
-                        vImg1A[i, j],
-                        vImg1R[i, j],
-                        vImg1G[i, j],
-                        vImg1B[i, j]);
-
-                    img3.SetPixel(i, j, cor);
-                }
-            }
-
-            pictureBox3.Image = img3;
-            Tx_Resolution_Update();
-        }
-        */
         private void btFlip_90_R_Click(object sender, EventArgs e)
         {
             if (img3 == null)
@@ -1719,7 +1826,6 @@ namespace ImageLoader
                 }
             }
         }
-
         private void btBlend_Click(object sender, EventArgs e)
         {
             if (img1 == null)
@@ -1736,6 +1842,30 @@ namespace ImageLoader
             try
             {
                 img3 = Blend_Image(img1, img2);
+                pictureBox3.Image = img3;
+                Tx_Resolution_Update();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void btOverlay_Click(object sender, EventArgs e)
+        {
+            if (img1 == null)
+            {
+                MessageBox.Show("img1 está nula");
+                return;
+            }
+            if (img2 == null)
+            {
+                MessageBox.Show("img2 está nula");
+                return;
+            }
+
+            try
+            {
+                img3 = Overlay_Image(img1, img2);
                 pictureBox3.Image = img3;
                 Tx_Resolution_Update();
             }
@@ -1936,22 +2066,295 @@ namespace ImageLoader
         }
         private void btPadding_Click(object sender, EventArgs e)
         {
-            /*if (img1 == null)
-            {
-                MessageBox.Show("img1 está nula");
-                return;
-            }
+            String mode = cbPadding.Text;
+            int numero = (int)nudPadding.Value;
 
-            try
+            if (img3 == null)
             {
-                img3 = AddPaddingToImage(img1, 1,);
-                pictureBox3.Image = img3;
-                Tx_Resolution_Update();
+                if (img1 == null)
+                {
+                    MessageBox.Show("img1 está nula");
+                    return;
+                }
+
+                try
+                {
+                    img3 = Add_Padding_To_Image(img1,numero, mode);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
-            }*/
+                try
+                {
+                    img3 = Add_Padding_To_Image(img3, numero, mode);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void btDilatation_Click(object sender, EventArgs e)
+        {
+            if (img3 == null)
+            {
+                if (img1 == null)
+                {
+                    MessageBox.Show("img1 está nula");
+                    return;
+                }
+
+                try
+                {
+                    img3 = Dilatation_Image(img1);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            }
+            else
+            {
+                try
+                {
+                    img3 = Dilatation_Image(img3);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+        private void btErosion_Click(object sender, EventArgs e)
+        {
+            if (img3 == null)
+            {
+                if (img1 == null)
+                {
+                    MessageBox.Show("img1 está nula");
+                    return;
+                }
+
+                try
+                {
+                    img3 = Erosion_Image(img1);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            }
+            else
+            {
+                try
+                {
+                    img3 = Erosion_Image(img3);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+        private void btOpening_Click(object sender, EventArgs e)
+        {
+            if (img3 == null)
+            {
+                if (img1 == null)
+                {
+                    MessageBox.Show("img1 está nula");
+                    return;
+                }
+
+                try
+                {
+                    img3 = Opening_Image(img1);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            }
+            else
+            {
+                try
+                {
+                    img3 = Opening_Image(img3);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+        private void btClosing_Click(object sender, EventArgs e)
+        {
+            if (img3 == null)
+            {
+                if (img1 == null)
+                {
+                    MessageBox.Show("img1 está nula");
+                    return;
+                }
+
+                try
+                {
+                    img3 = Closing_Image(img1);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            }
+            else
+            {
+                try
+                {
+                    img3 = Closing_Image(img3);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+        private void btContour_Click(object sender, EventArgs e)
+        {
+            if (img3 == null)
+            {
+                if (img1 == null)
+                {
+                    MessageBox.Show("img1 está nula");
+                    return;
+                }
+
+                try
+                {
+                    img3 = Contour_Image(img1);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            }
+            else
+            {
+                try
+                {
+                    img3 = Contour_Image(img3);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+        private void btExternalContour_Click(object sender, EventArgs e)
+        {
+            if (img3 == null)
+            {
+                if (img1 == null)
+                {
+                    MessageBox.Show("img1 está nula");
+                    return;
+                }
+
+                try
+                {
+                    img3 = ExternalContour_Image(img1);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            }
+            else
+            {
+                try
+                {
+                    img3 = ExternalContour_Image(img3);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+        private void btMorphologicalGradient_Click(object sender, EventArgs e)
+        {
+            if (img3 == null)
+            {
+                if (img1 == null)
+                {
+                    MessageBox.Show("img1 está nula");
+                    return;
+                }
+
+                try
+                {
+                    img3 = MorphologicalGradient_Image(img1);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            }
+            else
+            {
+                try
+                {
+                    img3 = MorphologicalGradient_Image(img3);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
 
         private void btAvg_Click(object sender, EventArgs e)
@@ -2442,5 +2845,7 @@ namespace ImageLoader
 
             chHistogram2.Series.Add(serie);
         }
+
+        
     }
 }
