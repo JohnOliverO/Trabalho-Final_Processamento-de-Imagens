@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btCarregarImagem = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -58,25 +58,26 @@
             this.Image_Frame_2 = new System.Windows.Forms.GroupBox();
             this.Tx_Resolution2 = new System.Windows.Forms.Label();
             this.Image_Frame_3 = new System.Windows.Forms.GroupBox();
+            this.btDelete = new System.Windows.Forms.Button();
             this.Tx_Resolution3 = new System.Windows.Forms.Label();
+            this.btFlip90R = new System.Windows.Forms.Button();
+            this.btSwitch3to1 = new System.Windows.Forms.Button();
+            this.btFlip90L = new System.Windows.Forms.Button();
             this.btOverlay = new System.Windows.Forms.Button();
             this.btFlipR = new System.Windows.Forms.Button();
             this.btFlipUpDown = new System.Windows.Forms.Button();
             this.btGray = new System.Windows.Forms.Button();
-            this.bt_Subt_2 = new System.Windows.Forms.Button();
+            this.bt_Difference = new System.Windows.Forms.Button();
             this.btN = new System.Windows.Forms.Button();
             this.Blend_Mult = new System.Windows.Forms.NumericUpDown();
             this.btBlend = new System.Windows.Forms.Button();
-            this.btAvg = new System.Windows.Forms.Button();
+            this.btAverage = new System.Windows.Forms.Button();
             this.btAnd = new System.Windows.Forms.Button();
             this.btOR = new System.Windows.Forms.Button();
             this.btNot = new System.Windows.Forms.Button();
             this.btXor = new System.Windows.Forms.Button();
             this.btBin = new System.Windows.Forms.Button();
             this.btSwap = new System.Windows.Forms.Button();
-            this.btFlip90R = new System.Windows.Forms.Button();
-            this.btFlip90L = new System.Windows.Forms.Button();
-            this.btSwitch3to1 = new System.Windows.Forms.Button();
             this.btEqualize = new System.Windows.Forms.Button();
             this.chHistogram1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chHistogram2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -94,7 +95,7 @@
             this.btLaplace1 = new System.Windows.Forms.Button();
             this.btLaplace2 = new System.Windows.Forms.Button();
             this.btDilatation = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbMorphologicalOperations = new System.Windows.Forms.GroupBox();
             this.btMorphologicalGradient = new System.Windows.Forms.Button();
             this.btExternalContour = new System.Windows.Forms.Button();
             this.btContour = new System.Windows.Forms.Button();
@@ -102,6 +103,7 @@
             this.btOpening = new System.Windows.Forms.Button();
             this.btErosion = new System.Windows.Forms.Button();
             this.nudPadding = new System.Windows.Forms.NumericUpDown();
+            this.gbOperationsBetweenImages = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -116,15 +118,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.chHistogram1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chHistogram2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOrder)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.gbMorphologicalOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPadding)).BeginInit();
+            this.gbOperationsBetweenImages.SuspendLayout();
             this.SuspendLayout();
             // 
             // btCarregarImagem
             // 
-            this.btCarregarImagem.Location = new System.Drawing.Point(29, 187);
+            this.btCarregarImagem.Location = new System.Drawing.Point(10, 201);
             this.btCarregarImagem.Name = "btCarregarImagem";
-            this.btCarregarImagem.Size = new System.Drawing.Size(163, 37);
+            this.btCarregarImagem.Size = new System.Drawing.Size(201, 37);
             this.btCarregarImagem.TabIndex = 0;
             this.btCarregarImagem.Text = "Carregar Imagem";
             this.btCarregarImagem.UseVisualStyleBackColor = true;
@@ -137,7 +140,7 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.Control;
-            this.pictureBox1.Location = new System.Drawing.Point(10, 20);
+            this.pictureBox1.Location = new System.Drawing.Point(10, 32);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(201, 163);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -147,7 +150,7 @@
             // pictureBox3
             // 
             this.pictureBox3.BackColor = System.Drawing.SystemColors.Control;
-            this.pictureBox3.Location = new System.Drawing.Point(10, 20);
+            this.pictureBox3.Location = new System.Drawing.Point(10, 32);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(201, 163);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -156,9 +159,9 @@
             // 
             // btSalvarImagem
             // 
-            this.btSalvarImagem.Location = new System.Drawing.Point(29, 187);
+            this.btSalvarImagem.Location = new System.Drawing.Point(10, 201);
             this.btSalvarImagem.Name = "btSalvarImagem";
-            this.btSalvarImagem.Size = new System.Drawing.Size(163, 37);
+            this.btSalvarImagem.Size = new System.Drawing.Size(201, 37);
             this.btSalvarImagem.TabIndex = 3;
             this.btSalvarImagem.Text = "Salvar Imagem";
             this.btSalvarImagem.UseVisualStyleBackColor = true;
@@ -167,7 +170,7 @@
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.SystemColors.Control;
-            this.pictureBox2.Location = new System.Drawing.Point(10, 20);
+            this.pictureBox2.Location = new System.Drawing.Point(10, 32);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(201, 163);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -176,9 +179,9 @@
             // 
             // btCarregarImagem2
             // 
-            this.btCarregarImagem2.Location = new System.Drawing.Point(29, 187);
+            this.btCarregarImagem2.Location = new System.Drawing.Point(10, 201);
             this.btCarregarImagem2.Name = "btCarregarImagem2";
-            this.btCarregarImagem2.Size = new System.Drawing.Size(163, 37);
+            this.btCarregarImagem2.Size = new System.Drawing.Size(201, 37);
             this.btCarregarImagem2.TabIndex = 5;
             this.btCarregarImagem2.Text = "Carregar Imagem";
             this.btCarregarImagem2.UseVisualStyleBackColor = true;
@@ -186,9 +189,9 @@
             // 
             // Add_Img
             // 
-            this.Add_Img.Location = new System.Drawing.Point(479, 4);
+            this.Add_Img.Location = new System.Drawing.Point(6, 20);
             this.Add_Img.Name = "Add_Img";
-            this.Add_Img.Size = new System.Drawing.Size(163, 37);
+            this.Add_Img.Size = new System.Drawing.Size(81, 29);
             this.Add_Img.TabIndex = 6;
             this.Add_Img.Text = "Somar Img";
             this.Add_Img.UseVisualStyleBackColor = true;
@@ -196,9 +199,9 @@
             // 
             // Sub_Img
             // 
-            this.Sub_Img.Location = new System.Drawing.Point(479, 47);
+            this.Sub_Img.Location = new System.Drawing.Point(108, 19);
             this.Sub_Img.Name = "Sub_Img";
-            this.Sub_Img.Size = new System.Drawing.Size(163, 37);
+            this.Sub_Img.Size = new System.Drawing.Size(86, 29);
             this.Sub_Img.TabIndex = 7;
             this.Sub_Img.Text = "Subtrair Img";
             this.Sub_Img.UseVisualStyleBackColor = true;
@@ -322,10 +325,10 @@
             this.Image_Frame_1.Controls.Add(this.btCarregarImagem);
             this.Image_Frame_1.Location = new System.Drawing.Point(6, 4);
             this.Image_Frame_1.Name = "Image_Frame_1";
-            this.Image_Frame_1.Size = new System.Drawing.Size(221, 229);
+            this.Image_Frame_1.Size = new System.Drawing.Size(221, 271);
             this.Image_Frame_1.TabIndex = 17;
             this.Image_Frame_1.TabStop = false;
-            this.Image_Frame_1.Text = "Imagem 1";
+            this.Image_Frame_1.Text = "Imagem1";
             // 
             // Tx_Resolution1
             // 
@@ -345,10 +348,10 @@
             this.Image_Frame_2.Controls.Add(this.pictureBox2);
             this.Image_Frame_2.Location = new System.Drawing.Point(233, 4);
             this.Image_Frame_2.Name = "Image_Frame_2";
-            this.Image_Frame_2.Size = new System.Drawing.Size(221, 229);
+            this.Image_Frame_2.Size = new System.Drawing.Size(221, 271);
             this.Image_Frame_2.TabIndex = 18;
             this.Image_Frame_2.TabStop = false;
-            this.Image_Frame_2.Text = "Imagem 2";
+            this.Image_Frame_2.Text = "Imagem2";
             // 
             // Tx_Resolution2
             // 
@@ -363,15 +366,29 @@
             // Image_Frame_3
             // 
             this.Image_Frame_3.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.Image_Frame_3.Controls.Add(this.btDelete);
             this.Image_Frame_3.Controls.Add(this.Tx_Resolution3);
             this.Image_Frame_3.Controls.Add(this.btSalvarImagem);
             this.Image_Frame_3.Controls.Add(this.pictureBox3);
+            this.Image_Frame_3.Controls.Add(this.btFlip90R);
+            this.Image_Frame_3.Controls.Add(this.btSwitch3to1);
+            this.Image_Frame_3.Controls.Add(this.btFlip90L);
             this.Image_Frame_3.Location = new System.Drawing.Point(974, 4);
             this.Image_Frame_3.Name = "Image_Frame_3";
-            this.Image_Frame_3.Size = new System.Drawing.Size(221, 229);
+            this.Image_Frame_3.Size = new System.Drawing.Size(221, 271);
             this.Image_Frame_3.TabIndex = 19;
             this.Image_Frame_3.TabStop = false;
             this.Image_Frame_3.Text = "Imagem 3";
+            // 
+            // btDelete
+            // 
+            this.btDelete.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btDelete.BackgroundImage")));
+            this.btDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btDelete.Location = new System.Drawing.Point(184, 240);
+            this.btDelete.Name = "btDelete";
+            this.btDelete.Size = new System.Drawing.Size(32, 28);
+            this.btDelete.TabIndex = 41;
+            this.btDelete.UseVisualStyleBackColor = true;
             // 
             // Tx_Resolution3
             // 
@@ -383,11 +400,44 @@
             this.Tx_Resolution3.TabIndex = 40;
             this.Tx_Resolution3.Text = "0x0";
             // 
+            // btFlip90R
+            // 
+            this.btFlip90R.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btFlip90R.BackgroundImage")));
+            this.btFlip90R.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btFlip90R.Location = new System.Drawing.Point(67, 240);
+            this.btFlip90R.Name = "btFlip90R";
+            this.btFlip90R.Size = new System.Drawing.Size(25, 25);
+            this.btFlip90R.TabIndex = 35;
+            this.btFlip90R.UseVisualStyleBackColor = true;
+            this.btFlip90R.Click += new System.EventHandler(this.btFlip_90_R_Click);
+            // 
+            // btSwitch3to1
+            // 
+            this.btSwitch3to1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btSwitch3to1.BackgroundImage")));
+            this.btSwitch3to1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btSwitch3to1.Location = new System.Drawing.Point(98, 240);
+            this.btSwitch3to1.Name = "btSwitch3to1";
+            this.btSwitch3to1.Size = new System.Drawing.Size(25, 25);
+            this.btSwitch3to1.TabIndex = 37;
+            this.btSwitch3to1.UseVisualStyleBackColor = true;
+            this.btSwitch3to1.Click += new System.EventHandler(this.btSwitch3to1_Click);
+            // 
+            // btFlip90L
+            // 
+            this.btFlip90L.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btFlip90L.BackgroundImage")));
+            this.btFlip90L.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btFlip90L.Location = new System.Drawing.Point(129, 240);
+            this.btFlip90L.Name = "btFlip90L";
+            this.btFlip90L.Size = new System.Drawing.Size(25, 25);
+            this.btFlip90L.TabIndex = 36;
+            this.btFlip90L.UseVisualStyleBackColor = true;
+            this.btFlip90L.Click += new System.EventHandler(this.btFlip_90_L_Click);
+            // 
             // btOverlay
             // 
-            this.btOverlay.Location = new System.Drawing.Point(739, 12);
+            this.btOverlay.Location = new System.Drawing.Point(108, 54);
             this.btOverlay.Name = "btOverlay";
-            this.btOverlay.Size = new System.Drawing.Size(163, 37);
+            this.btOverlay.Size = new System.Drawing.Size(73, 27);
             this.btOverlay.TabIndex = 20;
             this.btOverlay.Text = "Sobrepor";
             this.btOverlay.UseVisualStyleBackColor = true;
@@ -395,7 +445,7 @@
             // 
             // btFlipR
             // 
-            this.btFlipR.Location = new System.Drawing.Point(974, 263);
+            this.btFlipR.Location = new System.Drawing.Point(974, 301);
             this.btFlipR.Name = "btFlipR";
             this.btFlipR.Size = new System.Drawing.Size(106, 37);
             this.btFlipR.TabIndex = 21;
@@ -405,7 +455,7 @@
             // 
             // btFlipUpDown
             // 
-            this.btFlipUpDown.Location = new System.Drawing.Point(974, 306);
+            this.btFlipUpDown.Location = new System.Drawing.Point(974, 344);
             this.btFlipUpDown.Name = "btFlipUpDown";
             this.btFlipUpDown.Size = new System.Drawing.Size(106, 37);
             this.btFlipUpDown.TabIndex = 22;
@@ -423,19 +473,19 @@
             this.btGray.UseVisualStyleBackColor = true;
             this.btGray.Click += new System.EventHandler(this.btGray_Click);
             // 
-            // bt_Subt_2
+            // bt_Difference
             // 
-            this.bt_Subt_2.Location = new System.Drawing.Point(658, 90);
-            this.bt_Subt_2.Name = "bt_Subt_2";
-            this.bt_Subt_2.Size = new System.Drawing.Size(106, 37);
-            this.bt_Subt_2.TabIndex = 24;
-            this.bt_Subt_2.Text = "Diferença";
-            this.bt_Subt_2.UseVisualStyleBackColor = true;
-            this.bt_Subt_2.Click += new System.EventHandler(this.bt_Difference_Click);
+            this.bt_Difference.Location = new System.Drawing.Point(12, 55);
+            this.bt_Difference.Name = "bt_Difference";
+            this.bt_Difference.Size = new System.Drawing.Size(75, 30);
+            this.bt_Difference.TabIndex = 24;
+            this.bt_Difference.Text = "Diferença";
+            this.bt_Difference.UseVisualStyleBackColor = true;
+            this.bt_Difference.Click += new System.EventHandler(this.bt_Difference_Click);
             // 
             // btN
             // 
-            this.btN.Location = new System.Drawing.Point(1086, 263);
+            this.btN.Location = new System.Drawing.Point(1081, 301);
             this.btN.Name = "btN";
             this.btN.Size = new System.Drawing.Size(109, 37);
             this.btN.TabIndex = 25;
@@ -451,7 +501,7 @@
             0,
             0,
             131072});
-            this.Blend_Mult.Location = new System.Drawing.Point(574, 359);
+            this.Blend_Mult.Location = new System.Drawing.Point(113, 91);
             this.Blend_Mult.Maximum = new decimal(new int[] {
             1,
             0,
@@ -468,23 +518,23 @@
             // 
             // btBlend
             // 
-            this.btBlend.Location = new System.Drawing.Point(479, 349);
+            this.btBlend.Location = new System.Drawing.Point(12, 91);
             this.btBlend.Name = "btBlend";
-            this.btBlend.Size = new System.Drawing.Size(81, 37);
+            this.btBlend.Size = new System.Drawing.Size(63, 30);
             this.btBlend.TabIndex = 27;
             this.btBlend.Text = "Misturar";
             this.btBlend.UseVisualStyleBackColor = true;
             this.btBlend.Click += new System.EventHandler(this.btBlend_Click);
             // 
-            // btAvg
+            // btAverage
             // 
-            this.btAvg.Location = new System.Drawing.Point(479, 396);
-            this.btAvg.Name = "btAvg";
-            this.btAvg.Size = new System.Drawing.Size(163, 37);
-            this.btAvg.TabIndex = 28;
-            this.btAvg.Text = "Media";
-            this.btAvg.UseVisualStyleBackColor = true;
-            this.btAvg.Click += new System.EventHandler(this.btAvg_Click);
+            this.btAverage.Location = new System.Drawing.Point(91, 114);
+            this.btAverage.Name = "btAverage";
+            this.btAverage.Size = new System.Drawing.Size(90, 23);
+            this.btAverage.TabIndex = 28;
+            this.btAverage.Text = "Media";
+            this.btAverage.UseVisualStyleBackColor = true;
+            this.btAverage.Click += new System.EventHandler(this.btAverage_Click);
             // 
             // btAnd
             // 
@@ -540,45 +590,12 @@
             // 
             this.btSwap.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btSwap.BackgroundImage")));
             this.btSwap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btSwap.Location = new System.Drawing.Point(176, 239);
+            this.btSwap.Location = new System.Drawing.Point(219, 248);
             this.btSwap.Name = "btSwap";
-            this.btSwap.Size = new System.Drawing.Size(108, 36);
+            this.btSwap.Size = new System.Drawing.Size(21, 21);
             this.btSwap.TabIndex = 34;
             this.btSwap.UseVisualStyleBackColor = true;
             this.btSwap.Click += new System.EventHandler(this.btSwap_Click);
-            // 
-            // btFlip90R
-            // 
-            this.btFlip90R.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btFlip90R.BackgroundImage")));
-            this.btFlip90R.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btFlip90R.Location = new System.Drawing.Point(1044, 234);
-            this.btFlip90R.Name = "btFlip90R";
-            this.btFlip90R.Size = new System.Drawing.Size(25, 25);
-            this.btFlip90R.TabIndex = 35;
-            this.btFlip90R.UseVisualStyleBackColor = true;
-            this.btFlip90R.Click += new System.EventHandler(this.btFlip_90_R_Click);
-            // 
-            // btFlip90L
-            // 
-            this.btFlip90L.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btFlip90L.BackgroundImage")));
-            this.btFlip90L.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btFlip90L.Location = new System.Drawing.Point(1106, 234);
-            this.btFlip90L.Name = "btFlip90L";
-            this.btFlip90L.Size = new System.Drawing.Size(25, 25);
-            this.btFlip90L.TabIndex = 36;
-            this.btFlip90L.UseVisualStyleBackColor = true;
-            this.btFlip90L.Click += new System.EventHandler(this.btFlip_90_L_Click);
-            // 
-            // btSwitch3to1
-            // 
-            this.btSwitch3to1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btSwitch3to1.BackgroundImage")));
-            this.btSwitch3to1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btSwitch3to1.Location = new System.Drawing.Point(1075, 234);
-            this.btSwitch3to1.Name = "btSwitch3to1";
-            this.btSwitch3to1.Size = new System.Drawing.Size(25, 25);
-            this.btSwitch3to1.TabIndex = 37;
-            this.btSwitch3to1.UseVisualStyleBackColor = true;
-            this.btSwitch3to1.Click += new System.EventHandler(this.btSwitch3to1_Click);
             // 
             // btEqualize
             // 
@@ -592,32 +609,32 @@
             // 
             // chHistogram1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chHistogram1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chHistogram1.Legends.Add(legend1);
+            chartArea5.Name = "ChartArea1";
+            this.chHistogram1.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.chHistogram1.Legends.Add(legend5);
             this.chHistogram1.Location = new System.Drawing.Point(6, 281);
             this.chHistogram1.Name = "chHistogram1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chHistogram1.Series.Add(series1);
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            this.chHistogram1.Series.Add(series5);
             this.chHistogram1.Size = new System.Drawing.Size(448, 127);
             this.chHistogram1.TabIndex = 39;
             this.chHistogram1.Text = "chart1";
             // 
             // chHistogram2
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chHistogram2.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chHistogram2.Legends.Add(legend2);
+            chartArea6.Name = "ChartArea1";
+            this.chHistogram2.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.chHistogram2.Legends.Add(legend6);
             this.chHistogram2.Location = new System.Drawing.Point(6, 410);
             this.chHistogram2.Name = "chHistogram2";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chHistogram2.Series.Add(series2);
+            series6.ChartArea = "ChartArea1";
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.chHistogram2.Series.Add(series6);
             this.chHistogram2.Size = new System.Drawing.Size(448, 127);
             this.chHistogram2.TabIndex = 40;
             this.chHistogram2.Text = "chart2";
@@ -774,21 +791,21 @@
             this.btDilatation.UseVisualStyleBackColor = true;
             this.btDilatation.Click += new System.EventHandler(this.btDilatation_Click);
             // 
-            // groupBox1
+            // gbMorphologicalOperations
             // 
-            this.groupBox1.Controls.Add(this.btMorphologicalGradient);
-            this.groupBox1.Controls.Add(this.btExternalContour);
-            this.groupBox1.Controls.Add(this.btContour);
-            this.groupBox1.Controls.Add(this.btClosing);
-            this.groupBox1.Controls.Add(this.btOpening);
-            this.groupBox1.Controls.Add(this.btErosion);
-            this.groupBox1.Controls.Add(this.btDilatation);
-            this.groupBox1.Location = new System.Drawing.Point(990, 410);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 127);
-            this.groupBox1.TabIndex = 55;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Operações Morfológicas";
+            this.gbMorphologicalOperations.Controls.Add(this.btMorphologicalGradient);
+            this.gbMorphologicalOperations.Controls.Add(this.btExternalContour);
+            this.gbMorphologicalOperations.Controls.Add(this.btContour);
+            this.gbMorphologicalOperations.Controls.Add(this.btClosing);
+            this.gbMorphologicalOperations.Controls.Add(this.btOpening);
+            this.gbMorphologicalOperations.Controls.Add(this.btErosion);
+            this.gbMorphologicalOperations.Controls.Add(this.btDilatation);
+            this.gbMorphologicalOperations.Location = new System.Drawing.Point(990, 410);
+            this.gbMorphologicalOperations.Name = "gbMorphologicalOperations";
+            this.gbMorphologicalOperations.Size = new System.Drawing.Size(200, 127);
+            this.gbMorphologicalOperations.TabIndex = 55;
+            this.gbMorphologicalOperations.TabStop = false;
+            this.gbMorphologicalOperations.Text = "Operações Morfológicas";
             // 
             // btMorphologicalGradient
             // 
@@ -867,13 +884,31 @@
             0,
             0});
             // 
+            // gbOperationsBetweenImages
+            // 
+            this.gbOperationsBetweenImages.Controls.Add(this.btOverlay);
+            this.gbOperationsBetweenImages.Controls.Add(this.Sub_Img);
+            this.gbOperationsBetweenImages.Controls.Add(this.Add_Img);
+            this.gbOperationsBetweenImages.Controls.Add(this.bt_Difference);
+            this.gbOperationsBetweenImages.Controls.Add(this.btBlend);
+            this.gbOperationsBetweenImages.Controls.Add(this.Blend_Mult);
+            this.gbOperationsBetweenImages.Controls.Add(this.btAverage);
+            this.gbOperationsBetweenImages.Location = new System.Drawing.Point(680, 4);
+            this.gbOperationsBetweenImages.Name = "gbOperationsBetweenImages";
+            this.gbOperationsBetweenImages.Size = new System.Drawing.Size(200, 137);
+            this.gbOperationsBetweenImages.TabIndex = 57;
+            this.gbOperationsBetweenImages.TabStop = false;
+            this.gbOperationsBetweenImages.Text = "Operações entre duas imagens";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1202, 549);
+            this.Controls.Add(this.gbOperationsBetweenImages);
             this.Controls.Add(this.nudPadding);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.gbMorphologicalOperations);
+            this.Controls.Add(this.btSwap);
             this.Controls.Add(this.btLaplace2);
             this.Controls.Add(this.btLaplace1);
             this.Controls.Add(this.btSobel);
@@ -890,24 +925,15 @@
             this.Controls.Add(this.chHistogram2);
             this.Controls.Add(this.chHistogram1);
             this.Controls.Add(this.btEqualize);
-            this.Controls.Add(this.btSwitch3to1);
-            this.Controls.Add(this.btFlip90L);
-            this.Controls.Add(this.btFlip90R);
-            this.Controls.Add(this.btSwap);
             this.Controls.Add(this.btBin);
             this.Controls.Add(this.btXor);
             this.Controls.Add(this.btNot);
             this.Controls.Add(this.btOR);
             this.Controls.Add(this.btAnd);
-            this.Controls.Add(this.btAvg);
-            this.Controls.Add(this.btBlend);
-            this.Controls.Add(this.Blend_Mult);
             this.Controls.Add(this.btN);
-            this.Controls.Add(this.bt_Subt_2);
             this.Controls.Add(this.btGray);
             this.Controls.Add(this.btFlipUpDown);
             this.Controls.Add(this.btFlipR);
-            this.Controls.Add(this.btOverlay);
             this.Controls.Add(this.Image_Frame_3);
             this.Controls.Add(this.Image_Frame_2);
             this.Controls.Add(this.Image_Frame_1);
@@ -919,8 +945,6 @@
             this.Controls.Add(this.bt_sub_Brightness);
             this.Controls.Add(this.bt_add_Brightness);
             this.Controls.Add(this.Brightness_Mult);
-            this.Controls.Add(this.Sub_Img);
-            this.Controls.Add(this.Add_Img);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -940,8 +964,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.chHistogram1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chHistogram2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOrder)).EndInit();
-            this.groupBox1.ResumeLayout(false);
+            this.gbMorphologicalOperations.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nudPadding)).EndInit();
+            this.gbOperationsBetweenImages.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -973,11 +998,11 @@
         private System.Windows.Forms.Button btFlipR;
         private System.Windows.Forms.Button btFlipUpDown;
         private System.Windows.Forms.Button btGray;
-        private System.Windows.Forms.Button bt_Subt_2;
+        private System.Windows.Forms.Button bt_Difference;
         private System.Windows.Forms.Button btN;
         private System.Windows.Forms.NumericUpDown Blend_Mult;
         private System.Windows.Forms.Button btBlend;
-        private System.Windows.Forms.Button btAvg;
+        private System.Windows.Forms.Button btAverage;
         private System.Windows.Forms.Button btAnd;
         private System.Windows.Forms.Button btOR;
         private System.Windows.Forms.Button btNot;
@@ -1007,7 +1032,7 @@
         private System.Windows.Forms.Button btLaplace1;
         private System.Windows.Forms.Button btLaplace2;
         private System.Windows.Forms.Button btDilatation;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gbMorphologicalOperations;
         private System.Windows.Forms.Button btErosion;
         private System.Windows.Forms.Button btMorphologicalGradient;
         private System.Windows.Forms.Button btExternalContour;
@@ -1015,6 +1040,8 @@
         private System.Windows.Forms.Button btClosing;
         private System.Windows.Forms.Button btOpening;
         private System.Windows.Forms.NumericUpDown nudPadding;
+        private System.Windows.Forms.GroupBox gbOperationsBetweenImages;
+        private System.Windows.Forms.Button btDelete;
     }
 }
 

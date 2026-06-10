@@ -765,6 +765,31 @@ namespace ImageLoader
             }
             return newImage;
         }
+        Bitmap Average_Image(Bitmap image1,Bitmap image2)
+        {
+            Resolution_Verification(image1, image2);
+
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
+
+            for (int i = 0; i < image1.Width; i++)
+            {
+                for (int j = 0; j < image1.Height; j++)
+                {
+                    Color pixel = image1.GetPixel(i, j);
+                    Color pixel2 = image2.GetPixel(i, j);
+
+                    int R = (int)((pixel.R + pixel2.R) * 0.5);
+                    int G = (int)((pixel.G + pixel2.G) * 0.5);
+                    int B = (int)((pixel.B + pixel2.B) * 0.5);
+
+
+                    Color cor = Color.FromArgb(R,G,B);
+
+                    newImage.SetPixel(i, j, cor);
+                }
+            }
+            return newImage;
+        }
         Bitmap Median_Image(Bitmap image1)
         {
             Bitmap newImage = new Bitmap(image1.Width, image1.Height);
@@ -2356,52 +2381,30 @@ namespace ImageLoader
                 }
             }
         }
-
-        private void btAvg_Click(object sender, EventArgs e)
+        private void btAverage_Click(object sender, EventArgs e)
         {
-            img3 = new Bitmap(img1.Width, img1.Height);
-
-            vImg1R = new byte[img1.Width, img1.Height];
-            vImg1G = new byte[img1.Width, img1.Height];
-            vImg1B = new byte[img1.Width, img1.Height];
-
-            for (int i = 0; i < img1.Width; i++)
+            if (img1 == null)
             {
-                for (int j = 0; j < img1.Height; j++)
-                {
-                    if (img1 == null)
-                    {
-                        MessageBox.Show("img1 está null");
-                        return;
-                    }
-                    if (img2 == null)
-                    {
-                        MessageBox.Show("img2 está null");
-                        return;
-                    }
-
-                    Color pixel = img1.GetPixel(i, j);
-                    Color pixel2 = img2.GetPixel(i, j);
-
-                    vImg1R[i, j] = Convert.ToByte((pixel.R + pixel2.R) * 0.5);
-                    vImg1G[i, j] = Convert.ToByte((pixel.G + pixel2.G) * 0.5);
-                    vImg1B[i, j] = Convert.ToByte((pixel.B + pixel2.B) * 0.5);
-
-
-                    Color cor = Color.FromArgb(
-                        vImg1R[i, j],
-                        vImg1G[i, j],
-                        vImg1B[i, j]);
-
-                    img3.SetPixel(i, j, cor);
-                }
+                MessageBox.Show("img1 está nula");
+                return;
+            }
+            if (img2 == null)
+            {
+                MessageBox.Show("img2 está nula");
+                return;
             }
 
-            pictureBox3.Image = img3;
-            Tx_Resolution_Update();
+            try
+            {
+                img3 = Average_Image(img1, img2);
+                pictureBox3.Image = img3;
+                Tx_Resolution_Update();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-
-        
         public static Bitmap BinarizarImagem(Bitmap imagemOriginal, int limiar = 128)
         {
             int largura = imagemOriginal.Width;
