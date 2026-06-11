@@ -81,6 +81,25 @@ namespace ImageLoader
                 throw new ArgumentException("image1 e image2 devem ter a mesma resolução.");
             }
         }
+        public static Bitmap BinarizarImagem(Bitmap image1, int limiar = 128)
+        {
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
+
+            for (int i = 0; i < image1.Height; i++)
+            {
+                for (int j = 0; j < image1.Width; j++)
+                {
+                    Color corOriginal = image1.GetPixel(j, i);
+
+                    int intensidade = (int)((corOriginal.R + corOriginal.G + corOriginal.B) / 3);
+
+                    Color novaCor = (intensidade > limiar) ? Color.White : Color.Black;
+                    newImage.SetPixel(j, i, novaCor);
+
+                }
+            }
+            return newImage;
+        }
         Bitmap Crop_Image_Edges(Bitmap image, int numero)
         {
             if (numero <= 0) { 
@@ -949,9 +968,7 @@ namespace ImageLoader
             {
                 for (int j = 0; j < image1.Height; j++)
                 {
-                    if (i == 0 || j == 0 ||
-                        i == image1.Width - 1 ||
-                        j == image1.Height - 1)
+                    if (i == 0 || j == 0 || i == image1.Width - 1 || j == image1.Height - 1)
                     {
                         newImage.SetPixel(i, j, image1.GetPixel(i, j));
                     }
@@ -1994,6 +2011,25 @@ namespace ImageLoader
                 MessageBox.Show(ex.Message);
             }
         }
+        private void btGaussian_Click(object sender, EventArgs e)
+        {
+            if (img1 == null)
+            {
+                MessageBox.Show("img1 está nula");
+                return;
+            }
+
+            try
+            {
+                img3 = Gaussian_Image(img1);
+                pictureBox3.Image = img3;
+                Tx_Resolution_Update();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         private void btSmooth_Click(object sender, EventArgs e)
         {
             if (img1 == null)
@@ -2404,27 +2440,6 @@ namespace ImageLoader
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-        public static Bitmap BinarizarImagem(Bitmap imagemOriginal, int limiar = 128)
-        {
-            int largura = imagemOriginal.Width;
-            int altura = imagemOriginal.Height;
-            Bitmap imagemBinaria = new Bitmap(largura, altura);
-
-            for (int i = 0; i < altura; i++)
-            {
-                for (int j = 0; j < largura; j++)
-                {
-                    Color corOriginal = imagemOriginal.GetPixel(j,i);
-
-                    int intensidade = (int)((corOriginal.R + corOriginal.G + corOriginal.B) / 3);
-
-                    Color novaCor = (intensidade > limiar) ? Color.White : Color.Black;
-                    imagemBinaria.SetPixel(j, i, novaCor);
-                    
-                }
-            }
-            return imagemBinaria;
         }
         private void btBin_Click(object sender, EventArgs e)
         {
@@ -2849,6 +2864,11 @@ namespace ImageLoader
             chHistogram2.Series.Add(serie);
         }
 
-        
+        private void btDelete_Click(object sender, EventArgs e)
+        {
+            img3 = null;
+            pictureBox3.Image = img3;
+            Tx_Resolution_Update();
+        }
     }
 }

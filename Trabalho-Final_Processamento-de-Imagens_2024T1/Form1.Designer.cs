@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btCarregarImagem = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -104,6 +104,8 @@
             this.btErosion = new System.Windows.Forms.Button();
             this.nudPadding = new System.Windows.Forms.NumericUpDown();
             this.gbOperationsBetweenImages = new System.Windows.Forms.GroupBox();
+            this.gbConvolutionOperations = new System.Windows.Forms.GroupBox();
+            this.btGaussian = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -121,6 +123,7 @@
             this.gbMorphologicalOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPadding)).BeginInit();
             this.gbOperationsBetweenImages.SuspendLayout();
+            this.gbConvolutionOperations.SuspendLayout();
             this.SuspendLayout();
             // 
             // btCarregarImagem
@@ -389,6 +392,7 @@
             this.btDelete.Size = new System.Drawing.Size(32, 28);
             this.btDelete.TabIndex = 41;
             this.btDelete.UseVisualStyleBackColor = true;
+            this.btDelete.Click += new System.EventHandler(this.btDelete_Click);
             // 
             // Tx_Resolution3
             // 
@@ -501,7 +505,7 @@
             0,
             0,
             131072});
-            this.Blend_Mult.Location = new System.Drawing.Point(113, 91);
+            this.Blend_Mult.Location = new System.Drawing.Point(106, 91);
             this.Blend_Mult.Maximum = new decimal(new int[] {
             1,
             0,
@@ -520,7 +524,7 @@
             // 
             this.btBlend.Location = new System.Drawing.Point(12, 91);
             this.btBlend.Name = "btBlend";
-            this.btBlend.Size = new System.Drawing.Size(63, 30);
+            this.btBlend.Size = new System.Drawing.Size(75, 20);
             this.btBlend.TabIndex = 27;
             this.btBlend.Text = "Misturar";
             this.btBlend.UseVisualStyleBackColor = true;
@@ -528,9 +532,9 @@
             // 
             // btAverage
             // 
-            this.btAverage.Location = new System.Drawing.Point(91, 114);
+            this.btAverage.Location = new System.Drawing.Point(6, 114);
             this.btAverage.Name = "btAverage";
-            this.btAverage.Size = new System.Drawing.Size(90, 23);
+            this.btAverage.Size = new System.Drawing.Size(188, 23);
             this.btAverage.TabIndex = 28;
             this.btAverage.Text = "Media";
             this.btAverage.UseVisualStyleBackColor = true;
@@ -609,69 +613,69 @@
             // 
             // chHistogram1
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chHistogram1.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chHistogram1.Legends.Add(legend5);
+            chartArea3.Name = "ChartArea1";
+            this.chHistogram1.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chHistogram1.Legends.Add(legend3);
             this.chHistogram1.Location = new System.Drawing.Point(6, 281);
             this.chHistogram1.Name = "chHistogram1";
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.chHistogram1.Series.Add(series5);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chHistogram1.Series.Add(series3);
             this.chHistogram1.Size = new System.Drawing.Size(448, 127);
             this.chHistogram1.TabIndex = 39;
             this.chHistogram1.Text = "chart1";
             // 
             // chHistogram2
             // 
-            chartArea6.Name = "ChartArea1";
-            this.chHistogram2.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.chHistogram2.Legends.Add(legend6);
+            chartArea4.Name = "ChartArea1";
+            this.chHistogram2.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chHistogram2.Legends.Add(legend4);
             this.chHistogram2.Location = new System.Drawing.Point(6, 410);
             this.chHistogram2.Name = "chHistogram2";
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            this.chHistogram2.Series.Add(series6);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chHistogram2.Series.Add(series4);
             this.chHistogram2.Size = new System.Drawing.Size(448, 127);
             this.chHistogram2.TabIndex = 40;
             this.chHistogram2.Text = "chart2";
             // 
             // btMAX
             // 
-            this.btMAX.Location = new System.Drawing.Point(658, 147);
+            this.btMAX.Location = new System.Drawing.Point(6, 22);
             this.btMAX.Name = "btMAX";
-            this.btMAX.Size = new System.Drawing.Size(44, 23);
+            this.btMAX.Size = new System.Drawing.Size(58, 23);
             this.btMAX.TabIndex = 41;
-            this.btMAX.Text = "Max";
+            this.btMAX.Text = "Maximo";
             this.btMAX.UseVisualStyleBackColor = true;
             this.btMAX.Click += new System.EventHandler(this.btMAX_Click);
             // 
             // btMIN
             // 
-            this.btMIN.Location = new System.Drawing.Point(708, 147);
+            this.btMIN.Location = new System.Drawing.Point(70, 22);
             this.btMIN.Name = "btMIN";
-            this.btMIN.Size = new System.Drawing.Size(44, 23);
+            this.btMIN.Size = new System.Drawing.Size(56, 23);
             this.btMIN.TabIndex = 42;
-            this.btMIN.Text = "Min";
+            this.btMIN.Text = "Minimo";
             this.btMIN.UseVisualStyleBackColor = true;
             this.btMIN.Click += new System.EventHandler(this.btMIN_Click);
             // 
             // btMean
             // 
-            this.btMean.Location = new System.Drawing.Point(658, 176);
+            this.btMean.Location = new System.Drawing.Point(132, 22);
             this.btMean.Name = "btMean";
-            this.btMean.Size = new System.Drawing.Size(44, 23);
+            this.btMean.Size = new System.Drawing.Size(58, 23);
             this.btMean.TabIndex = 43;
-            this.btMean.Text = "Mean";
+            this.btMean.Text = "Media";
             this.btMean.UseVisualStyleBackColor = true;
             this.btMean.Click += new System.EventHandler(this.btMean_Click);
             // 
             // btMedian
             // 
-            this.btMedian.Location = new System.Drawing.Point(658, 205);
+            this.btMedian.Location = new System.Drawing.Point(6, 51);
             this.btMedian.Name = "btMedian";
             this.btMedian.Size = new System.Drawing.Size(94, 23);
             this.btMedian.TabIndex = 44;
@@ -681,7 +685,7 @@
             // 
             // brOrder
             // 
-            this.brOrder.Location = new System.Drawing.Point(658, 234);
+            this.brOrder.Location = new System.Drawing.Point(6, 80);
             this.brOrder.Name = "brOrder";
             this.brOrder.Size = new System.Drawing.Size(94, 23);
             this.brOrder.TabIndex = 45;
@@ -691,14 +695,14 @@
             // 
             // nudOrder
             // 
-            this.nudOrder.Location = new System.Drawing.Point(767, 234);
+            this.nudOrder.Location = new System.Drawing.Point(106, 80);
             this.nudOrder.Maximum = new decimal(new int[] {
             8,
             0,
             0,
             0});
             this.nudOrder.Name = "nudOrder";
-            this.nudOrder.Size = new System.Drawing.Size(33, 20);
+            this.nudOrder.Size = new System.Drawing.Size(84, 20);
             this.nudOrder.TabIndex = 46;
             this.nudOrder.Value = new decimal(new int[] {
             1,
@@ -708,7 +712,7 @@
             // 
             // btSmooth
             // 
-            this.btSmooth.Location = new System.Drawing.Point(658, 263);
+            this.btSmooth.Location = new System.Drawing.Point(100, 51);
             this.btSmooth.Name = "btSmooth";
             this.btSmooth.Size = new System.Drawing.Size(94, 23);
             this.btSmooth.TabIndex = 47;
@@ -743,7 +747,7 @@
             // 
             // btPrewitt
             // 
-            this.btPrewitt.Location = new System.Drawing.Point(786, 470);
+            this.btPrewitt.Location = new System.Drawing.Point(6, 141);
             this.btPrewitt.Name = "btPrewitt";
             this.btPrewitt.Size = new System.Drawing.Size(94, 23);
             this.btPrewitt.TabIndex = 50;
@@ -753,7 +757,7 @@
             // 
             // btSobel
             // 
-            this.btSobel.Location = new System.Drawing.Point(786, 499);
+            this.btSobel.Location = new System.Drawing.Point(6, 170);
             this.btSobel.Name = "btSobel";
             this.btSobel.Size = new System.Drawing.Size(94, 23);
             this.btSobel.TabIndex = 51;
@@ -763,7 +767,7 @@
             // 
             // btLaplace1
             // 
-            this.btLaplace1.Location = new System.Drawing.Point(886, 470);
+            this.btLaplace1.Location = new System.Drawing.Point(100, 141);
             this.btLaplace1.Name = "btLaplace1";
             this.btLaplace1.Size = new System.Drawing.Size(94, 23);
             this.btLaplace1.TabIndex = 52;
@@ -773,7 +777,7 @@
             // 
             // btLaplace2
             // 
-            this.btLaplace2.Location = new System.Drawing.Point(886, 499);
+            this.btLaplace2.Location = new System.Drawing.Point(100, 170);
             this.btLaplace2.Name = "btLaplace2";
             this.btLaplace2.Size = new System.Drawing.Size(94, 23);
             this.btLaplace2.TabIndex = 53;
@@ -900,28 +904,49 @@
             this.gbOperationsBetweenImages.TabStop = false;
             this.gbOperationsBetweenImages.Text = "Operações entre duas imagens";
             // 
+            // gbConvolutionOperations
+            // 
+            this.gbConvolutionOperations.Controls.Add(this.btGaussian);
+            this.gbConvolutionOperations.Controls.Add(this.btLaplace1);
+            this.gbConvolutionOperations.Controls.Add(this.btPrewitt);
+            this.gbConvolutionOperations.Controls.Add(this.btSobel);
+            this.gbConvolutionOperations.Controls.Add(this.btLaplace2);
+            this.gbConvolutionOperations.Controls.Add(this.btMAX);
+            this.gbConvolutionOperations.Controls.Add(this.btMIN);
+            this.gbConvolutionOperations.Controls.Add(this.btMean);
+            this.gbConvolutionOperations.Controls.Add(this.btSmooth);
+            this.gbConvolutionOperations.Controls.Add(this.btMedian);
+            this.gbConvolutionOperations.Controls.Add(this.nudOrder);
+            this.gbConvolutionOperations.Controls.Add(this.brOrder);
+            this.gbConvolutionOperations.Location = new System.Drawing.Point(680, 147);
+            this.gbConvolutionOperations.Name = "gbConvolutionOperations";
+            this.gbConvolutionOperations.Size = new System.Drawing.Size(200, 200);
+            this.gbConvolutionOperations.TabIndex = 58;
+            this.gbConvolutionOperations.TabStop = false;
+            this.gbConvolutionOperations.Text = "Operações de Convolução";
+            // 
+            // btGaussian
+            // 
+            this.btGaussian.Location = new System.Drawing.Point(6, 109);
+            this.btGaussian.Name = "btGaussian";
+            this.btGaussian.Size = new System.Drawing.Size(188, 23);
+            this.btGaussian.TabIndex = 54;
+            this.btGaussian.Text = "Gaussiana";
+            this.btGaussian.UseVisualStyleBackColor = true;
+            this.btGaussian.Click += new System.EventHandler(this.btGaussian_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1202, 549);
+            this.Controls.Add(this.gbConvolutionOperations);
             this.Controls.Add(this.gbOperationsBetweenImages);
             this.Controls.Add(this.nudPadding);
             this.Controls.Add(this.gbMorphologicalOperations);
             this.Controls.Add(this.btSwap);
-            this.Controls.Add(this.btLaplace2);
-            this.Controls.Add(this.btLaplace1);
-            this.Controls.Add(this.btSobel);
-            this.Controls.Add(this.btPrewitt);
             this.Controls.Add(this.btPadding);
             this.Controls.Add(this.cbPadding);
-            this.Controls.Add(this.btSmooth);
-            this.Controls.Add(this.nudOrder);
-            this.Controls.Add(this.brOrder);
-            this.Controls.Add(this.btMedian);
-            this.Controls.Add(this.btMean);
-            this.Controls.Add(this.btMIN);
-            this.Controls.Add(this.btMAX);
             this.Controls.Add(this.chHistogram2);
             this.Controls.Add(this.chHistogram1);
             this.Controls.Add(this.btEqualize);
@@ -967,6 +992,7 @@
             this.gbMorphologicalOperations.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nudPadding)).EndInit();
             this.gbOperationsBetweenImages.ResumeLayout(false);
+            this.gbConvolutionOperations.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1042,6 +1068,8 @@
         private System.Windows.Forms.NumericUpDown nudPadding;
         private System.Windows.Forms.GroupBox gbOperationsBetweenImages;
         private System.Windows.Forms.Button btDelete;
+        private System.Windows.Forms.GroupBox gbConvolutionOperations;
+        private System.Windows.Forms.Button btGaussian;
     }
 }
 
