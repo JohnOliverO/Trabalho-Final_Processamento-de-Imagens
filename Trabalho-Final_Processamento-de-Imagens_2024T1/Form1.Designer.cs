@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btCarregarImagem = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -106,6 +106,7 @@
             this.gbOperationsBetweenImages = new System.Windows.Forms.GroupBox();
             this.gbConvolutionOperations = new System.Windows.Forms.GroupBox();
             this.btGaussian = new System.Windows.Forms.Button();
+            this.btLogicalOperations = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -124,6 +125,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudPadding)).BeginInit();
             this.gbOperationsBetweenImages.SuspendLayout();
             this.gbConvolutionOperations.SuspendLayout();
+            this.btLogicalOperations.SuspendLayout();
             this.SuspendLayout();
             // 
             // btCarregarImagem
@@ -218,7 +220,7 @@
             0,
             0,
             131072});
-            this.Brightness_Mult.Location = new System.Drawing.Point(574, 186);
+            this.Brightness_Mult.Location = new System.Drawing.Point(574, 100);
             this.Brightness_Mult.Maximum = new decimal(new int[] {
             255,
             0,
@@ -235,7 +237,7 @@
             // 
             // bt_add_Brightness
             // 
-            this.bt_add_Brightness.Location = new System.Drawing.Point(479, 90);
+            this.bt_add_Brightness.Location = new System.Drawing.Point(479, 4);
             this.bt_add_Brightness.Name = "bt_add_Brightness";
             this.bt_add_Brightness.Size = new System.Drawing.Size(81, 37);
             this.bt_add_Brightness.TabIndex = 10;
@@ -245,7 +247,7 @@
             // 
             // bt_sub_Brightness
             // 
-            this.bt_sub_Brightness.Location = new System.Drawing.Point(479, 133);
+            this.bt_sub_Brightness.Location = new System.Drawing.Point(479, 47);
             this.bt_sub_Brightness.Name = "bt_sub_Brightness";
             this.bt_sub_Brightness.Size = new System.Drawing.Size(81, 37);
             this.bt_sub_Brightness.TabIndex = 11;
@@ -255,7 +257,7 @@
             // 
             // Brightness_Up
             // 
-            this.Brightness_Up.Location = new System.Drawing.Point(574, 100);
+            this.Brightness_Up.Location = new System.Drawing.Point(574, 14);
             this.Brightness_Up.Maximum = new decimal(new int[] {
             255,
             0,
@@ -267,7 +269,7 @@
             // 
             // bt_div_Brightness
             // 
-            this.bt_div_Brightness.Location = new System.Drawing.Point(479, 220);
+            this.bt_div_Brightness.Location = new System.Drawing.Point(479, 134);
             this.bt_div_Brightness.Name = "bt_div_Brightness";
             this.bt_div_Brightness.Size = new System.Drawing.Size(81, 37);
             this.bt_div_Brightness.TabIndex = 14;
@@ -277,7 +279,7 @@
             // 
             // bt_mult_Brightness
             // 
-            this.bt_mult_Brightness.Location = new System.Drawing.Point(479, 176);
+            this.bt_mult_Brightness.Location = new System.Drawing.Point(479, 90);
             this.bt_mult_Brightness.Name = "bt_mult_Brightness";
             this.bt_mult_Brightness.Size = new System.Drawing.Size(81, 37);
             this.bt_mult_Brightness.TabIndex = 13;
@@ -287,7 +289,7 @@
             // 
             // Brightness_Down
             // 
-            this.Brightness_Down.Location = new System.Drawing.Point(574, 143);
+            this.Brightness_Down.Location = new System.Drawing.Point(574, 57);
             this.Brightness_Down.Maximum = new decimal(new int[] {
             255,
             0,
@@ -305,7 +307,7 @@
             0,
             0,
             131072});
-            this.Brightness_Div.Location = new System.Drawing.Point(574, 230);
+            this.Brightness_Div.Location = new System.Drawing.Point(574, 144);
             this.Brightness_Div.Maximum = new decimal(new int[] {
             255,
             0,
@@ -469,7 +471,7 @@
             // 
             // btGray
             // 
-            this.btGray.Location = new System.Drawing.Point(479, 263);
+            this.btGray.Location = new System.Drawing.Point(479, 177);
             this.btGray.Name = "btGray";
             this.btGray.Size = new System.Drawing.Size(163, 37);
             this.btGray.TabIndex = 23;
@@ -542,7 +544,7 @@
             // 
             // btAnd
             // 
-            this.btAnd.Location = new System.Drawing.Point(658, 396);
+            this.btAnd.Location = new System.Drawing.Point(6, 19);
             this.btAnd.Name = "btAnd";
             this.btAnd.Size = new System.Drawing.Size(44, 23);
             this.btAnd.TabIndex = 29;
@@ -552,7 +554,7 @@
             // 
             // btOR
             // 
-            this.btOR.Location = new System.Drawing.Point(708, 396);
+            this.btOR.Location = new System.Drawing.Point(55, 19);
             this.btOR.Name = "btOR";
             this.btOR.Size = new System.Drawing.Size(44, 23);
             this.btOR.TabIndex = 30;
@@ -562,7 +564,7 @@
             // 
             // btNot
             // 
-            this.btNot.Location = new System.Drawing.Point(658, 425);
+            this.btNot.Location = new System.Drawing.Point(155, 19);
             this.btNot.Name = "btNot";
             this.btNot.Size = new System.Drawing.Size(44, 23);
             this.btNot.TabIndex = 31;
@@ -572,7 +574,7 @@
             // 
             // btXor
             // 
-            this.btXor.Location = new System.Drawing.Point(708, 425);
+            this.btXor.Location = new System.Drawing.Point(105, 19);
             this.btXor.Name = "btXor";
             this.btXor.Size = new System.Drawing.Size(44, 23);
             this.btXor.TabIndex = 32;
@@ -582,7 +584,7 @@
             // 
             // btBin
             // 
-            this.btBin.Location = new System.Drawing.Point(479, 439);
+            this.btBin.Location = new System.Drawing.Point(479, 263);
             this.btBin.Name = "btBin";
             this.btBin.Size = new System.Drawing.Size(163, 37);
             this.btBin.TabIndex = 33;
@@ -603,7 +605,7 @@
             // 
             // btEqualize
             // 
-            this.btEqualize.Location = new System.Drawing.Point(479, 306);
+            this.btEqualize.Location = new System.Drawing.Point(479, 220);
             this.btEqualize.Name = "btEqualize";
             this.btEqualize.Size = new System.Drawing.Size(163, 37);
             this.btEqualize.TabIndex = 38;
@@ -613,32 +615,32 @@
             // 
             // chHistogram1
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chHistogram1.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chHistogram1.Legends.Add(legend3);
+            chartArea1.Name = "ChartArea1";
+            this.chHistogram1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chHistogram1.Legends.Add(legend1);
             this.chHistogram1.Location = new System.Drawing.Point(6, 281);
             this.chHistogram1.Name = "chHistogram1";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chHistogram1.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chHistogram1.Series.Add(series1);
             this.chHistogram1.Size = new System.Drawing.Size(448, 127);
             this.chHistogram1.TabIndex = 39;
             this.chHistogram1.Text = "chart1";
             // 
             // chHistogram2
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chHistogram2.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chHistogram2.Legends.Add(legend4);
+            chartArea2.Name = "ChartArea1";
+            this.chHistogram2.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chHistogram2.Legends.Add(legend2);
             this.chHistogram2.Location = new System.Drawing.Point(6, 410);
             this.chHistogram2.Name = "chHistogram2";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chHistogram2.Series.Add(series4);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chHistogram2.Series.Add(series2);
             this.chHistogram2.Size = new System.Drawing.Size(448, 127);
             this.chHistogram2.TabIndex = 40;
             this.chHistogram2.Text = "chart2";
@@ -730,14 +732,14 @@
             "Reflect",
             "Mirror",
             "Wrap"});
-            this.cbPadding.Location = new System.Drawing.Point(584, 482);
+            this.cbPadding.Location = new System.Drawing.Point(584, 346);
             this.cbPadding.Name = "cbPadding";
             this.cbPadding.Size = new System.Drawing.Size(58, 21);
             this.cbPadding.TabIndex = 48;
             // 
             // btPadding
             // 
-            this.btPadding.Location = new System.Drawing.Point(479, 480);
+            this.btPadding.Location = new System.Drawing.Point(479, 344);
             this.btPadding.Name = "btPadding";
             this.btPadding.Size = new System.Drawing.Size(99, 23);
             this.btPadding.TabIndex = 49;
@@ -787,7 +789,7 @@
             // 
             // btDilatation
             // 
-            this.btDilatation.Location = new System.Drawing.Point(0, 19);
+            this.btDilatation.Location = new System.Drawing.Point(7, 17);
             this.btDilatation.Name = "btDilatation";
             this.btDilatation.Size = new System.Drawing.Size(100, 23);
             this.btDilatation.TabIndex = 54;
@@ -804,16 +806,16 @@
             this.gbMorphologicalOperations.Controls.Add(this.btOpening);
             this.gbMorphologicalOperations.Controls.Add(this.btErosion);
             this.gbMorphologicalOperations.Controls.Add(this.btDilatation);
-            this.gbMorphologicalOperations.Location = new System.Drawing.Point(990, 410);
+            this.gbMorphologicalOperations.Location = new System.Drawing.Point(974, 405);
             this.gbMorphologicalOperations.Name = "gbMorphologicalOperations";
-            this.gbMorphologicalOperations.Size = new System.Drawing.Size(200, 127);
+            this.gbMorphologicalOperations.Size = new System.Drawing.Size(216, 127);
             this.gbMorphologicalOperations.TabIndex = 55;
             this.gbMorphologicalOperations.TabStop = false;
             this.gbMorphologicalOperations.Text = "Operações Morfológicas";
             // 
             // btMorphologicalGradient
             // 
-            this.btMorphologicalGradient.Location = new System.Drawing.Point(46, 105);
+            this.btMorphologicalGradient.Location = new System.Drawing.Point(53, 103);
             this.btMorphologicalGradient.Name = "btMorphologicalGradient";
             this.btMorphologicalGradient.Size = new System.Drawing.Size(100, 23);
             this.btMorphologicalGradient.TabIndex = 60;
@@ -823,7 +825,7 @@
             // 
             // btExternalContour
             // 
-            this.btExternalContour.Location = new System.Drawing.Point(100, 76);
+            this.btExternalContour.Location = new System.Drawing.Point(107, 74);
             this.btExternalContour.Name = "btExternalContour";
             this.btExternalContour.Size = new System.Drawing.Size(100, 23);
             this.btExternalContour.TabIndex = 59;
@@ -833,7 +835,7 @@
             // 
             // btContour
             // 
-            this.btContour.Location = new System.Drawing.Point(0, 76);
+            this.btContour.Location = new System.Drawing.Point(7, 74);
             this.btContour.Name = "btContour";
             this.btContour.Size = new System.Drawing.Size(100, 23);
             this.btContour.TabIndex = 58;
@@ -843,7 +845,7 @@
             // 
             // btClosing
             // 
-            this.btClosing.Location = new System.Drawing.Point(100, 47);
+            this.btClosing.Location = new System.Drawing.Point(107, 45);
             this.btClosing.Name = "btClosing";
             this.btClosing.Size = new System.Drawing.Size(100, 23);
             this.btClosing.TabIndex = 57;
@@ -853,7 +855,7 @@
             // 
             // btOpening
             // 
-            this.btOpening.Location = new System.Drawing.Point(0, 47);
+            this.btOpening.Location = new System.Drawing.Point(7, 45);
             this.btOpening.Name = "btOpening";
             this.btOpening.Size = new System.Drawing.Size(100, 23);
             this.btOpening.TabIndex = 56;
@@ -863,7 +865,7 @@
             // 
             // btErosion
             // 
-            this.btErosion.Location = new System.Drawing.Point(100, 19);
+            this.btErosion.Location = new System.Drawing.Point(107, 17);
             this.btErosion.Name = "btErosion";
             this.btErosion.Size = new System.Drawing.Size(100, 23);
             this.btErosion.TabIndex = 55;
@@ -873,7 +875,7 @@
             // 
             // nudPadding
             // 
-            this.nudPadding.Location = new System.Drawing.Point(479, 509);
+            this.nudPadding.Location = new System.Drawing.Point(479, 373);
             this.nudPadding.Maximum = new decimal(new int[] {
             1410065408,
             2,
@@ -899,7 +901,7 @@
             this.gbOperationsBetweenImages.Controls.Add(this.btAverage);
             this.gbOperationsBetweenImages.Location = new System.Drawing.Point(680, 4);
             this.gbOperationsBetweenImages.Name = "gbOperationsBetweenImages";
-            this.gbOperationsBetweenImages.Size = new System.Drawing.Size(200, 137);
+            this.gbOperationsBetweenImages.Size = new System.Drawing.Size(200, 144);
             this.gbOperationsBetweenImages.TabIndex = 57;
             this.gbOperationsBetweenImages.TabStop = false;
             this.gbOperationsBetweenImages.Text = "Operações entre duas imagens";
@@ -918,7 +920,7 @@
             this.gbConvolutionOperations.Controls.Add(this.btMedian);
             this.gbConvolutionOperations.Controls.Add(this.nudOrder);
             this.gbConvolutionOperations.Controls.Add(this.brOrder);
-            this.gbConvolutionOperations.Location = new System.Drawing.Point(680, 147);
+            this.gbConvolutionOperations.Location = new System.Drawing.Point(680, 235);
             this.gbConvolutionOperations.Name = "gbConvolutionOperations";
             this.gbConvolutionOperations.Size = new System.Drawing.Size(200, 200);
             this.gbConvolutionOperations.TabIndex = 58;
@@ -935,11 +937,25 @@
             this.btGaussian.UseVisualStyleBackColor = true;
             this.btGaussian.Click += new System.EventHandler(this.btGaussian_Click);
             // 
+            // btLogicalOperations
+            // 
+            this.btLogicalOperations.Controls.Add(this.btAnd);
+            this.btLogicalOperations.Controls.Add(this.btOR);
+            this.btLogicalOperations.Controls.Add(this.btXor);
+            this.btLogicalOperations.Controls.Add(this.btNot);
+            this.btLogicalOperations.Location = new System.Drawing.Point(680, 164);
+            this.btLogicalOperations.Name = "btLogicalOperations";
+            this.btLogicalOperations.Size = new System.Drawing.Size(208, 50);
+            this.btLogicalOperations.TabIndex = 59;
+            this.btLogicalOperations.TabStop = false;
+            this.btLogicalOperations.Text = "Operações Lógicas";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1202, 549);
+            this.Controls.Add(this.btLogicalOperations);
             this.Controls.Add(this.gbConvolutionOperations);
             this.Controls.Add(this.gbOperationsBetweenImages);
             this.Controls.Add(this.nudPadding);
@@ -951,10 +967,6 @@
             this.Controls.Add(this.chHistogram1);
             this.Controls.Add(this.btEqualize);
             this.Controls.Add(this.btBin);
-            this.Controls.Add(this.btXor);
-            this.Controls.Add(this.btNot);
-            this.Controls.Add(this.btOR);
-            this.Controls.Add(this.btAnd);
             this.Controls.Add(this.btN);
             this.Controls.Add(this.btGray);
             this.Controls.Add(this.btFlipUpDown);
@@ -993,6 +1005,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudPadding)).EndInit();
             this.gbOperationsBetweenImages.ResumeLayout(false);
             this.gbConvolutionOperations.ResumeLayout(false);
+            this.btLogicalOperations.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1070,6 +1083,7 @@
         private System.Windows.Forms.Button btDelete;
         private System.Windows.Forms.GroupBox gbConvolutionOperations;
         private System.Windows.Forms.Button btGaussian;
+        private System.Windows.Forms.GroupBox btLogicalOperations;
     }
 }
 
