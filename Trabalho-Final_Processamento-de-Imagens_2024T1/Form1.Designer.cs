@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btCarregarImagem = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -73,10 +73,10 @@
             this.btBlend = new System.Windows.Forms.Button();
             this.btAverage = new System.Windows.Forms.Button();
             this.btAnd = new System.Windows.Forms.Button();
-            this.btOR = new System.Windows.Forms.Button();
+            this.btOr = new System.Windows.Forms.Button();
             this.btNot = new System.Windows.Forms.Button();
             this.btXor = new System.Windows.Forms.Button();
-            this.btBin = new System.Windows.Forms.Button();
+            this.btBinarize = new System.Windows.Forms.Button();
             this.btSwap = new System.Windows.Forms.Button();
             this.btEqualize = new System.Windows.Forms.Button();
             this.chHistogram1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -552,15 +552,15 @@
             this.btAnd.UseVisualStyleBackColor = true;
             this.btAnd.Click += new System.EventHandler(this.btAnd_Click);
             // 
-            // btOR
+            // btOr
             // 
-            this.btOR.Location = new System.Drawing.Point(55, 19);
-            this.btOR.Name = "btOR";
-            this.btOR.Size = new System.Drawing.Size(44, 23);
-            this.btOR.TabIndex = 30;
-            this.btOR.Text = "OR";
-            this.btOR.UseVisualStyleBackColor = true;
-            this.btOR.Click += new System.EventHandler(this.btOR_Click);
+            this.btOr.Location = new System.Drawing.Point(55, 19);
+            this.btOr.Name = "btOr";
+            this.btOr.Size = new System.Drawing.Size(44, 23);
+            this.btOr.TabIndex = 30;
+            this.btOr.Text = "OR";
+            this.btOr.UseVisualStyleBackColor = true;
+            this.btOr.Click += new System.EventHandler(this.btOr_Click);
             // 
             // btNot
             // 
@@ -582,15 +582,15 @@
             this.btXor.UseVisualStyleBackColor = true;
             this.btXor.Click += new System.EventHandler(this.btXor_Click);
             // 
-            // btBin
+            // btBinarize
             // 
-            this.btBin.Location = new System.Drawing.Point(479, 263);
-            this.btBin.Name = "btBin";
-            this.btBin.Size = new System.Drawing.Size(163, 37);
-            this.btBin.TabIndex = 33;
-            this.btBin.Text = "limiarizar";
-            this.btBin.UseVisualStyleBackColor = true;
-            this.btBin.Click += new System.EventHandler(this.btBin_Click);
+            this.btBinarize.Location = new System.Drawing.Point(479, 263);
+            this.btBinarize.Name = "btBinarize";
+            this.btBinarize.Size = new System.Drawing.Size(163, 37);
+            this.btBinarize.TabIndex = 33;
+            this.btBinarize.Text = "limiarizar";
+            this.btBinarize.UseVisualStyleBackColor = true;
+            this.btBinarize.Click += new System.EventHandler(this.btBinarize_Click);
             // 
             // btSwap
             // 
@@ -615,32 +615,32 @@
             // 
             // chHistogram1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chHistogram1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chHistogram1.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.chHistogram1.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chHistogram1.Legends.Add(legend3);
             this.chHistogram1.Location = new System.Drawing.Point(6, 281);
             this.chHistogram1.Name = "chHistogram1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chHistogram1.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chHistogram1.Series.Add(series3);
             this.chHistogram1.Size = new System.Drawing.Size(448, 127);
             this.chHistogram1.TabIndex = 39;
             this.chHistogram1.Text = "chart1";
             // 
             // chHistogram2
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chHistogram2.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chHistogram2.Legends.Add(legend2);
+            chartArea4.Name = "ChartArea1";
+            this.chHistogram2.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chHistogram2.Legends.Add(legend4);
             this.chHistogram2.Location = new System.Drawing.Point(6, 410);
             this.chHistogram2.Name = "chHistogram2";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chHistogram2.Series.Add(series2);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chHistogram2.Series.Add(series4);
             this.chHistogram2.Size = new System.Drawing.Size(448, 127);
             this.chHistogram2.TabIndex = 40;
             this.chHistogram2.Text = "chart2";
@@ -940,7 +940,7 @@
             // btLogicalOperations
             // 
             this.btLogicalOperations.Controls.Add(this.btAnd);
-            this.btLogicalOperations.Controls.Add(this.btOR);
+            this.btLogicalOperations.Controls.Add(this.btOr);
             this.btLogicalOperations.Controls.Add(this.btXor);
             this.btLogicalOperations.Controls.Add(this.btNot);
             this.btLogicalOperations.Location = new System.Drawing.Point(680, 164);
@@ -966,7 +966,7 @@
             this.Controls.Add(this.chHistogram2);
             this.Controls.Add(this.chHistogram1);
             this.Controls.Add(this.btEqualize);
-            this.Controls.Add(this.btBin);
+            this.Controls.Add(this.btBinarize);
             this.Controls.Add(this.btN);
             this.Controls.Add(this.btGray);
             this.Controls.Add(this.btFlipUpDown);
@@ -1043,10 +1043,10 @@
         private System.Windows.Forms.Button btBlend;
         private System.Windows.Forms.Button btAverage;
         private System.Windows.Forms.Button btAnd;
-        private System.Windows.Forms.Button btOR;
+        private System.Windows.Forms.Button btOr;
         private System.Windows.Forms.Button btNot;
         private System.Windows.Forms.Button btXor;
-        private System.Windows.Forms.Button btBin;
+        private System.Windows.Forms.Button btBinarize;
         private System.Windows.Forms.Button btSwap;
         private System.Windows.Forms.Button btFlip90R;
         private System.Windows.Forms.Button btFlip90L;

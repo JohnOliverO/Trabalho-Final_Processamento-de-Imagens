@@ -25,22 +25,11 @@ namespace ImageLoader
         Bitmap img3;
         Bitmap imgR;
 
-        Bitmap imgbinary1;
-        Bitmap imgbinary2;
-
         int[] histogram1;
         int[] histogram2;
         int[] CFD;
 
-        byte[,] vImg1Gray;
-
-        byte[,] vImg1R;
-        byte[,] vImg1G;
-        byte[,] vImg1B;
-        byte[,] vImg1A;
-
-        int[,] Mask;
-
+        int[,] Kernel;
         int[,] StructuringElement;
 
         enum PaddingMode
@@ -81,7 +70,7 @@ namespace ImageLoader
                 throw new ArgumentException("image1 e image2 devem ter a mesma resolução.");
             }
         }
-        public static Bitmap BinarizarImagem(Bitmap image1, int limiar = 128)
+        public static Bitmap BinarizeImage(Bitmap image1, int limiar = 128)
         {
             Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
@@ -682,6 +671,164 @@ namespace ImageLoader
 
             return newImage;
         }
+        Bitmap AND_Image(Bitmap image1,Bitmap image2)
+        {
+            Resolution_Verification(image1, image2);
+
+            Bitmap img1binary = BinarizeImage(image1);
+            Bitmap img2binary = BinarizeImage(image2);
+
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
+
+            for (int i = 0; i < image1.Width; i++)
+            {
+                for (int j = 0; j < image1.Height; j++)
+                {
+                    Color pixel1 = img1binary.GetPixel(i, j);
+                    Color pixel2 = img2binary.GetPixel(i, j);
+
+                    Color cor = Color.Aqua;
+
+                    if (pixel1.R == 255 && pixel2.R == 255)
+                        newImage.SetPixel(i, j, Color.White);
+                    else
+                        newImage.SetPixel(i, j, Color.Black);
+                }
+            }
+            return newImage;
+        }
+        Bitmap OR_Image(Bitmap image1, Bitmap image2)
+        {
+            Resolution_Verification(image1, image2);
+
+            Bitmap img1binary = BinarizeImage(image1);
+            Bitmap img2binary = BinarizeImage(image2);
+
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
+
+            for (int i = 0; i < image1.Width; i++)
+            {
+                for (int j = 0; j < image1.Height; j++)
+                {
+                    Color pixel1 = img1binary.GetPixel(i, j);
+                    Color pixel2 = img2binary.GetPixel(i, j);
+
+                    if (pixel1.R == 255 || pixel2.R == 255)
+                        newImage.SetPixel(i, j, Color.White);
+                    else
+                        newImage.SetPixel(i, j, Color.Black);
+                }
+            }
+            return newImage;
+        }
+        Bitmap NOT_Image(Bitmap image1)
+        {
+            Bitmap img1binary = BinarizeImage(image1);
+
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
+
+            for (int i = 0; i < image1.Width; i++)
+            {
+                for (int j = 0; j < image1.Height; j++)
+                {
+                    Color pixel = img1binary.GetPixel(i, j);
+
+                    if (pixel.R == 255)
+                        newImage.SetPixel(i, j, Color.Black);
+                    else
+                        newImage.SetPixel(i, j, Color.White);
+                }
+            }
+            return newImage;
+        }
+        Bitmap XOR_Image(Bitmap image1, Bitmap image2)
+        {
+            Resolution_Verification(image1, image2);
+
+            Bitmap img1binary = BinarizeImage(image1);
+            Bitmap img2binary = BinarizeImage(image2);
+
+            Bitmap newImage = new Bitmap(image1.Width, image1.Height);
+
+            for (int i = 0; i < image1.Width; i++)
+            {
+                for (int j = 0; j < image1.Height; j++)
+                {
+                    Color pixel1 = img1binary.GetPixel(i, j);
+                    Color pixel2 = img2binary.GetPixel(i, j);
+
+                    if ((pixel1.R == 255 && pixel2.R != 255) || (pixel1.R != 255 && pixel2.R == 255))
+                        newImage.SetPixel(i, j, Color.White);
+                    else
+                        newImage.SetPixel(i, j, Color.Black);
+                }
+            }
+            return newImage;
+        }
+        Bitmap Equalize_Image(Bitmap image)
+        {
+            Bitmap newImage = new Bitmap(image.Width, image.Height);
+
+            histogram1 = new int[256];
+            histogram2 = new int[256];
+            CFD = new int[256];
+
+            for (int i = 0; i < image.Height; i++)
+            {
+                for (int j = 0; j < image.Width; j++)
+                {
+                    Color pixel = image.GetPixel(j, i);
+
+                    int value = (pixel.R + pixel.G + pixel.B) / 3;
+
+                    histogram1[value]++;
+                }
+            }
+
+            UpdateHistogramChart();
+
+            for (int i = 0; i < 256; i++)
+            {
+                if (i == 0)
+                {
+                    CFD[i] = histogram1[i];
+                }
+                else
+                {
+                    CFD[i] = CFD[i - 1] + histogram1[i];
+                }
+            }
+
+            for (int i = 0; i < image.Height; i++)
+            {
+                for (int j = 0; j < image.Width; j++)
+                {
+                    Color pixel = image.GetPixel(j, i);
+
+                    int value = (pixel.R + pixel.G + pixel.B) / 3;
+
+                    int v = (int)Math.Floor((double)(CFD[value] - CFD[0]) / ((image.Height * image.Width) - CFD[0]) * 255);
+
+                    Color cor = Color.FromArgb(v, v, v);
+
+                    newImage.SetPixel(j, i, cor);
+                }
+            }
+
+            for (int i = 0; i < newImage.Height; i++)
+            {
+                for (int j = 0; j < newImage.Width; j++)
+                {
+                    Color pixel = newImage.GetPixel(j, i);
+
+                    int value = (pixel.R + pixel.G + pixel.B) / 3;
+
+                    histogram2[value]++;
+                }
+            }
+            UpdateHistogramChart2();
+            return newImage;
+        }
         Bitmap MEAN_Image(Bitmap image1)
         {
             Bitmap newImage = new Bitmap(image1.Width, image1.Height);
@@ -955,7 +1102,7 @@ namespace ImageLoader
         {
             Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
-            int[,] kernel =
+            Kernel = new int[,]
             {
                 { 1, 2, 1 },
                 { 2, 4, 2 },
@@ -986,9 +1133,9 @@ namespace ImageLoader
                                     i - 1 + k,
                                     j - 1 + l);
 
-                                somaR += pixel.R * kernel[k, l];
-                                somaG += pixel.G * kernel[k, l];
-                                somaB += pixel.B * kernel[k, l];
+                                somaR += pixel.R * Kernel[k, l];
+                                somaG += pixel.G * Kernel[k, l];
+                                somaB += pixel.B * Kernel[k, l];
                             }
                         }
 
@@ -1285,7 +1432,7 @@ namespace ImageLoader
         {
             Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
-            Bitmap binary1 = BinarizarImagem(image1);
+            Bitmap binary1 = BinarizeImage(image1);
 
             for (int i = 0; i < image1.Width; i++)
             {
@@ -1299,13 +1446,13 @@ namespace ImageLoader
                     {
                         bool Tem = false;
 
-                        for (int k = 0; k < Mask.GetLength(0); k++)
+                        for (int k = 0; k < StructuringElement.GetLength(0); k++)
                         {
-                            for (int l = 0; l < Mask.GetLength(1); l++)
+                            for (int l = 0; l < StructuringElement.GetLength(1); l++)
                             {
                                 Color pixel = binary1.GetPixel(i - 1 + k, j - 1 + l);
 
-                                if (pixel.R == 255 && Mask[k, l] == 255)
+                                if (pixel.R == 255 && StructuringElement[k, l] == 255)
                                 {
                                     Tem = true;
                                     break;
@@ -1331,7 +1478,7 @@ namespace ImageLoader
         {
             Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
-            Bitmap binary1 = BinarizarImagem(image1);
+            Bitmap binary1 = BinarizeImage(image1);
 
             for (int i = 0; i < image1.Width; i++)
             {
@@ -1345,13 +1492,13 @@ namespace ImageLoader
                     {
                         bool Tem = true;
 
-                        for (int k = 0; k < Mask.GetLength(0); k++)
+                        for (int k = 0; k < StructuringElement.GetLength(0); k++)
                         {
-                            for (int l = 0; l < Mask.GetLength(1); l++)
+                            for (int l = 0; l < StructuringElement.GetLength(1); l++)
                             {
                                 Color pixel = binary1.GetPixel(i - 1 + k, j - 1 + l);
 
-                                if (pixel.R == 0 && Mask[k, l] == 255)
+                                if (pixel.R == 0 && StructuringElement[k, l] == 255)
                                 {
                                     Tem = false;
                                     break;
@@ -2441,190 +2588,116 @@ namespace ImageLoader
                 MessageBox.Show(ex.Message);
             }
         }
-        private void btBin_Click(object sender, EventArgs e)
+        private void btBinarize_Click(object sender, EventArgs e)
         {
-            img3 = new Bitmap(img1.Width, img1.Height);
-
-            imgbinary1 = new Bitmap(img1.Width, img1.Height);
-
             if (img1 == null)
             {
-                MessageBox.Show("img1 está null");
+                MessageBox.Show("img1 está nula");
                 return;
             }
 
-            img3 = BinarizarImagem(img1);
-
-            pictureBox3.Image = img3;
-            Tx_Resolution_Update();
+            try
+            {
+                img3 = BinarizeImage(img1);
+                pictureBox3.Image = img3;
+                Tx_Resolution_Update();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-
         private void btAnd_Click(object sender, EventArgs e)
         {
-            img3 = new Bitmap(img1.Width, img1.Height);
-
             if (img1 == null)
             {
-                MessageBox.Show("img1 está null");
+                MessageBox.Show("img1 está nula");
                 return;
             }
             if (img2 == null)
             {
-                MessageBox.Show("img2 está null");
+                MessageBox.Show("img2 está nula");
                 return;
             }
 
-            imgbinary1 = BinarizarImagem(img1);
-            imgbinary2 = BinarizarImagem(img2);
-
-            for (int i = 0; i < img1.Width; i++)
+            try
             {
-                for (int j = 0; j < img1.Height; j++)
-                {
-
-                    Color pixel = imgbinary1.GetPixel(i, j);
-                    Color pixel2 = imgbinary2.GetPixel(i, j);
-
-                    Color cor = Color.Aqua;
-
-                    if (pixel.R == 255 && pixel2.R == 255)
-                    {
-                        cor = Color.White;
-                    }
-                    else
-                    {
-                        cor = Color.Black;
-                    }
-
-                    img3.SetPixel(i, j, cor);
-                }
+                img3 = AND_Image(img1, img2);
+                pictureBox3.Image = img3;
+                Tx_Resolution_Update();
             }
-
-            pictureBox3.Image = img3;
-            Tx_Resolution_Update();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-
-        private void btOR_Click(object sender, EventArgs e)
+        private void btOr_Click(object sender, EventArgs e)
         {
-            img3 = new Bitmap(img1.Width, img1.Height);
-
             if (img1 == null)
             {
-                MessageBox.Show("img1 está null");
+                MessageBox.Show("img1 está nula");
                 return;
             }
             if (img2 == null)
             {
-                MessageBox.Show("img2 está null");
+                MessageBox.Show("img2 está nula");
                 return;
             }
 
-            imgbinary1 = BinarizarImagem(img1);
-            imgbinary2 = BinarizarImagem(img2);
-
-            for (int i = 0; i < img1.Width; i++)
+            try
             {
-                for (int j = 0; j < img1.Height; j++)
-                {
-                    Color p1 = imgbinary1.GetPixel(i, j);
-                    Color p2 = imgbinary2.GetPixel(i, j);
-
-                    if (p1.R == 255 || p2.R == 255)
-                        img3.SetPixel(i, j, Color.White);
-                    else
-                        img3.SetPixel(i, j, Color.Black);
-                }
+                img3 = OR_Image(img1, img2);
+                pictureBox3.Image = img3;
+                Tx_Resolution_Update();
             }
-
-            pictureBox3.Image = img3;
-            Tx_Resolution_Update();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-
         private void btNot_Click(object sender, EventArgs e)
         {
-            img3 = new Bitmap(img1.Width, img1.Height);
-
             if (img1 == null)
             {
-                MessageBox.Show("img1 está null");
+                MessageBox.Show("img1 está nula");
                 return;
             }
 
-            imgbinary1 = BinarizarImagem(img1);
-
-            for (int i = 0; i < img1.Width; i++)
+            try
             {
-                for (int j = 0; j < img1.Height; j++)
-                {
-
-                    Color pixel = imgbinary1.GetPixel(i, j);
-
-                    Color cor = Color.Aqua;
-
-                    if (pixel.R == 255)
-                    {
-                        cor = Color.Black;
-                    }
-                    else
-                    {
-                        cor = Color.White;
-                    }
-
-                    img3.SetPixel(i, j, cor);
-                }
+                img3 = NOT_Image(img1);
+                pictureBox3.Image = img3;
+                Tx_Resolution_Update();
             }
-
-            pictureBox3.Image = img3;
-            Tx_Resolution_Update();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-
         private void btXor_Click(object sender, EventArgs e)
         {
-            img3 = new Bitmap(img1.Width, img1.Height);
-
             if (img1 == null)
             {
-                MessageBox.Show("img1 está null");
+                MessageBox.Show("img1 está nula");
                 return;
             }
-
-            imgbinary1 = BinarizarImagem(img1);
-
             if (img2 == null)
             {
-                MessageBox.Show("img2 está null");
+                MessageBox.Show("img2 está nula");
                 return;
             }
 
-            imgbinary2 = BinarizarImagem(img2);
-
-            for (int i = 0; i < img1.Width; i++)
+            try
             {
-                for (int j = 0; j < img1.Height; j++)
-                {
-
-                    Color pixel = imgbinary1.GetPixel(i, j);
-                    Color pixel2 = imgbinary2.GetPixel(i, j);
-
-                    Color cor = Color.Aqua;
-
-                    if ((pixel.R == 255 && pixel2.R != 255) || (pixel.R != 255 && pixel2.R == 255))
-                    {
-                        cor = Color.White;
-                    }
-                    else
-                    {
-                        cor = Color.Black;
-                    }
-
-                    img3.SetPixel(i, j, cor);
-                }
+                img3 = XOR_Image(img1, img2);
+                pictureBox3.Image = img3;
+                Tx_Resolution_Update();
             }
-
-            pictureBox3.Image = img3;
-            Tx_Resolution_Update();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-
         private void btSwap_Click(object sender, EventArgs e)
         {
             if (img1 != null)
@@ -2646,7 +2719,6 @@ namespace ImageLoader
             pictureBox2.Image = img2;
             Tx_Resolution_Update();
         }
-
         private void btSwitch3to1_Click(object sender, EventArgs e)
         {
             img1 = img3;
@@ -2654,184 +2726,24 @@ namespace ImageLoader
             pictureBox1.Image = img1;
             Tx_Resolution_Update();
         }
-
-        private void btFlip90R_Click(object sender, EventArgs e)
-        {
-            if (img3 == null)
-            {
-                img3 = new Bitmap(img1.Height,img1.Width);
-
-                if (img1 == null)
-                {
-                    MessageBox.Show("img1 está null");
-                    return;
-                }
-
-                for (int i = 0; i < img1.Height; i++)
-                {
-                    for (int j = 0; j < img1.Width; j++)
-                    {
-                        Color pixel = img1.GetPixel(j, i);
-
-                        Color cor = Color.FromArgb(
-                            pixel.A,
-                            pixel.R,
-                            pixel.G,
-                            pixel.B);
-
-                        img3.SetPixel(img1.Height - i - 1, j, cor);
-                    }
-                }
-
-                pictureBox3.Image = img3;
-                Tx_Resolution_Update();
-            }
-            else
-            {
-                imgR = new Bitmap(img3.Height, img3.Width);
-
-                for (int i = 0; i < img3.Height; i++)
-                {
-                    for (int j = 0; j < img3.Width; j++)
-                    {
-                        Color pixel = img3.GetPixel(j, i);
-
-                        Color cor = Color.FromArgb(
-                            pixel.A,
-                            pixel.R,
-                            pixel.G,
-                            pixel.B);
-
-                        imgR.SetPixel(img3.Height - i - 1, j, cor);
-                    }
-                }
-                img3 = imgR;
-                pictureBox3.Image = img3;
-                Tx_Resolution_Update();
-            }
-        }
-
-        private void btFlip90L_Click(object sender, EventArgs e)
-        {
-            if (img3 == null)
-            {
-                img3 = new Bitmap(img1.Height, img1.Width);
-
-                if (img1 == null)
-                {
-                    MessageBox.Show("img1 está null");
-                    return;
-                }
-
-                for (int i = 0; i < img1.Height; i++)
-                {
-                    for (int j = 0; j < img1.Width; j++)
-                    {
-                        Color pixel = img1.GetPixel(j, i);
-
-                        Color cor = Color.FromArgb(
-                            pixel.A,
-                            pixel.R,
-                            pixel.G,
-                            pixel.B);
-
-                        img3.SetPixel(i, img1.Width - j - 1, cor);
-                    }
-                }
-
-                pictureBox3.Image = img3;
-                Tx_Resolution_Update();
-            }
-            else
-            {
-                imgR = new Bitmap(img3.Height, img3.Width);
-
-                for (int i = 0; i < img3.Height; i++)
-                {
-                    for (int j = 0; j < img3.Width; j++)
-                    {
-                        Color pixel = img3.GetPixel(j, i);
-
-                        Color cor = Color.FromArgb(
-                            pixel.A,
-                            pixel.R,
-                            pixel.G,
-                            pixel.B);
-
-                        imgR.SetPixel(i, img3.Width - j - 1, cor);
-                    }
-                }
-                img3 = imgR;
-                pictureBox3.Image = img3;
-                Tx_Resolution_Update();
-            }
-        }
-
         private void btEqualize_Click(object sender, EventArgs e)
         {
-            img3 = new Bitmap(img1.Width, img1.Height);
-
-            histogram1 = new int[256];
-            histogram2 = new int[256];
-            CFD = new int[256];
-
-            for (int i = 0; i < img1.Height; i++)
+            if (img1 == null)
             {
-                for (int j = 0; j < img1.Width; j++)
-                {
-                    Color pixel = img1.GetPixel(j, i);
-
-                    int value = (pixel.R + pixel.G + pixel.B)/3;
-
-                    histogram1[value]++;
-                }
+                MessageBox.Show("img1 está nula");
+                return;
             }
 
-            UpdateHistogramChart();
-
-            for (int i = 0; i < 256; i++)
+            try
             {
-                if(i == 0)
-                {
-                    CFD[i] = histogram1[i];
-                }
-                else
-                {
-                    CFD[i] = CFD[i - 1] + histogram1[i];
-                }
+                img3 = Equalize_Image(img1);
+                pictureBox3.Image = img3;
+                Tx_Resolution_Update();
             }
-
-            for (int i = 0; i < img1.Height; i++)
+            catch (Exception ex)
             {
-                for (int j = 0; j < img1.Width; j++)
-                {
-                    Color pixel = img1.GetPixel(j, i);
-
-                    int value = (pixel.R + pixel.G + pixel.B) / 3;
-
-                    int v = (int)Math.Floor((double)(CFD[value] - CFD[0]) / ((img1.Height * img1.Width) - CFD[0]) * 255);
-
-                    Color cor = Color.FromArgb(v,v,v);
-
-                    img3.SetPixel(j, i, cor);
-                }
+                MessageBox.Show(ex.Message);
             }
-
-            for (int i = 0; i < img3.Height; i++)
-            {
-                for (int j = 0; j < img3.Width; j++)
-                {
-                    Color pixel = img3.GetPixel(j, i);
-
-                    int value = (pixel.R + pixel.G + pixel.B) / 3;
-
-                    histogram2[value]++;
-                }
-            }
-
-            UpdateHistogramChart2();
-            pictureBox3.Image = img3;
-            Tx_Resolution_Update();
         }
 
         void UpdateHistogramChart()
