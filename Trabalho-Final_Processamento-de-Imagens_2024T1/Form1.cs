@@ -331,7 +331,7 @@ namespace ImageLoader
             }
             return newImage;
         }
-        Bitmap Sub_Image(Bitmap image1, Bitmap image2)
+        Bitmap Subtract_Image(Bitmap image1, Bitmap image2)
         {
             Resolution_Verification(image1, image2);
 
@@ -765,6 +765,34 @@ namespace ImageLoader
             }
             return newImage;
         }
+        void UpdateHistogramChart()
+        {
+            chHistogram1.Series.Clear();
+
+            var serie = new System.Windows.Forms.DataVisualization.Charting.Series();
+            serie.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+
+            for (int i = 0; i < 256; i++)
+            {
+                serie.Points.AddXY(i, histogram1[i]);
+            }
+
+            chHistogram1.Series.Add(serie);
+        }
+        void UpdateHistogramChart2()
+        {
+            chHistogram2.Series.Clear();
+
+            var serie = new System.Windows.Forms.DataVisualization.Charting.Series();
+            serie.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+
+            for (int i = 0; i < 256; i++)
+            {
+                serie.Points.AddXY(i, histogram2[i]);
+            }
+
+            chHistogram2.Series.Add(serie);
+        }
         Bitmap Equalize_Image(Bitmap image)
         {
             Bitmap newImage = new Bitmap(image.Width, image.Height);
@@ -829,7 +857,7 @@ namespace ImageLoader
             UpdateHistogramChart2();
             return newImage;
         }
-        Bitmap MEAN_Image(Bitmap image1)
+        Bitmap Mean_Image(Bitmap image1)
         {
             Bitmap newImage = new Bitmap(image1.Width, image1.Height);
 
@@ -1530,15 +1558,15 @@ namespace ImageLoader
         }
         Bitmap Contour_Image(Bitmap image1)
         {
-            return Sub_Image(image1, Erosion_Image(image1));
+            return Subtract_Image(image1, Erosion_Image(image1));
         }
         Bitmap ExternalContour_Image(Bitmap image1)
         {
-            return Sub_Image(Dilatation_Image(image1), image1);
+            return Subtract_Image(Dilatation_Image(image1), image1);
         }
         Bitmap MorphologicalGradient_Image(Bitmap image1)
         {
-            return Sub_Image(
+            return Subtract_Image(
                 Dilatation_Image(image1),
                 Erosion_Image(image1)
             );
@@ -1661,7 +1689,7 @@ namespace ImageLoader
 
             }
         }
-        private void Somar_Img_Click(object sender, EventArgs e)
+        private void btAdd_Click(object sender, EventArgs e)
         {
             if (img1 == null)
             {
@@ -1685,8 +1713,7 @@ namespace ImageLoader
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void Subtrair_Img_Click(object sender, EventArgs e)
+        private void btSubtract_Click(object sender, EventArgs e)
         {
             if (img1 == null)
             {
@@ -1701,7 +1728,7 @@ namespace ImageLoader
 
             try
             {
-                img3 = Sub_Image(img1, img2);
+                img3 = Subtract_Image(img1, img2);
                 pictureBox3.Image = img3;
                 Tx_Resolution_Update();
             }
@@ -1710,8 +1737,7 @@ namespace ImageLoader
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void bt_add_Brightness_Click(object sender, EventArgs e)
+        private void btAddBrightness_Click(object sender, EventArgs e)
         {
             if (img1 == null)
             {
@@ -1730,8 +1756,7 @@ namespace ImageLoader
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void bt_sub_Brightness_Click(object sender, EventArgs e)
+        private void btSubtractBrightness_Click(object sender, EventArgs e)
         {
             if (img1 == null)
             {
@@ -1750,8 +1775,7 @@ namespace ImageLoader
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void bt_mult_Brightness_Click(object sender, EventArgs e)
+        private void btMultBrightness_Click(object sender, EventArgs e)
         {
             if (img1 == null)
             {
@@ -1770,8 +1794,7 @@ namespace ImageLoader
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void bt_div_Brightness_Click(object sender, EventArgs e)
+        private void btDivBrightness_Click(object sender, EventArgs e)
         {
             if (img1 == null)
             {
@@ -1898,7 +1921,7 @@ namespace ImageLoader
                 }
             }
         }
-        private void btFlip_Horizontal_Click(object sender, EventArgs e)
+        private void btFlipHorizontal_Click(object sender, EventArgs e)
         {
             if (img3 == null)
             {
@@ -1934,8 +1957,7 @@ namespace ImageLoader
                 }
             }
         }
-
-        private void btGray_Click(object sender, EventArgs e)
+        private void btGrayScaleAverage_Click(object sender, EventArgs e)
         {
             if (img1 == null)
             {
@@ -1954,7 +1976,26 @@ namespace ImageLoader
                 MessageBox.Show(ex.Message);
             }
         }
-        private void bt_Difference_Click(object sender, EventArgs e)
+        private void btGrayScaleLuminance_Click(object sender, EventArgs e)
+        {
+            if (img1 == null)
+            {
+                MessageBox.Show("img1 está nula");
+                return;
+            }
+
+            try
+            {
+                img3 = GrayScale_Luminance_Image(img1);
+                pictureBox3.Image = img3;
+                Tx_Resolution_Update();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void btDifference_Click(object sender, EventArgs e)
         {
             if (img1 == null)
             {
@@ -1978,8 +2019,7 @@ namespace ImageLoader
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void btN_Click(object sender, EventArgs e)
+        private void btNegative_Click(object sender, EventArgs e)
         {
             if (img3 == null)
             {
@@ -2111,7 +2151,7 @@ namespace ImageLoader
 
             try
             {
-                img3 = MEAN_Image(img1);
+                img3 = Mean_Image(img1);
                 pictureBox3.Image = img3;
                 Tx_Resolution_Update();
             }
@@ -2745,37 +2785,6 @@ namespace ImageLoader
                 MessageBox.Show(ex.Message);
             }
         }
-
-        void UpdateHistogramChart()
-        {
-            chHistogram1.Series.Clear();
-
-            var serie = new System.Windows.Forms.DataVisualization.Charting.Series();
-            serie.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
-
-            for (int i = 0; i < 256; i++)
-            {
-                serie.Points.AddXY(i, histogram1[i]);
-            }
-
-            chHistogram1.Series.Add(serie);
-        }
-
-        void UpdateHistogramChart2()
-        {
-            chHistogram2.Series.Clear();
-
-            var serie = new System.Windows.Forms.DataVisualization.Charting.Series();
-            serie.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
-
-            for (int i = 0; i < 256; i++)
-            {
-                serie.Points.AddXY(i, histogram2[i]);
-            }
-
-            chHistogram2.Series.Add(serie);
-        }
-
         private void btDelete_Click(object sender, EventArgs e)
         {
             img3 = null;

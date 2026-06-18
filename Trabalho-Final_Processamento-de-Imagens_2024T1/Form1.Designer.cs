@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.btCarregarImagem = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -43,14 +43,14 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btCarregarImagem2 = new System.Windows.Forms.Button();
-            this.Add_Img = new System.Windows.Forms.Button();
-            this.Sub_Img = new System.Windows.Forms.Button();
+            this.btAdd = new System.Windows.Forms.Button();
+            this.btSubtract = new System.Windows.Forms.Button();
             this.Brightness_Mult = new System.Windows.Forms.NumericUpDown();
-            this.bt_add_Brightness = new System.Windows.Forms.Button();
-            this.bt_sub_Brightness = new System.Windows.Forms.Button();
+            this.btAddBrightness = new System.Windows.Forms.Button();
+            this.btSubtractBrightness = new System.Windows.Forms.Button();
             this.Brightness_Up = new System.Windows.Forms.NumericUpDown();
-            this.bt_div_Brightness = new System.Windows.Forms.Button();
-            this.bt_mult_Brightness = new System.Windows.Forms.Button();
+            this.btDivBrightness = new System.Windows.Forms.Button();
+            this.btMultBrightness = new System.Windows.Forms.Button();
             this.Brightness_Down = new System.Windows.Forms.NumericUpDown();
             this.Brightness_Div = new System.Windows.Forms.NumericUpDown();
             this.Image_Frame_1 = new System.Windows.Forms.GroupBox();
@@ -64,11 +64,11 @@
             this.btSwitch3to1 = new System.Windows.Forms.Button();
             this.btFlip90L = new System.Windows.Forms.Button();
             this.btOverlay = new System.Windows.Forms.Button();
-            this.btFlipR = new System.Windows.Forms.Button();
+            this.btFlipHorizontal = new System.Windows.Forms.Button();
             this.btFlipUpDown = new System.Windows.Forms.Button();
-            this.btGray = new System.Windows.Forms.Button();
-            this.bt_Difference = new System.Windows.Forms.Button();
-            this.btN = new System.Windows.Forms.Button();
+            this.btGrayScaleAverage = new System.Windows.Forms.Button();
+            this.btDifference = new System.Windows.Forms.Button();
+            this.btNegative = new System.Windows.Forms.Button();
             this.Blend_Mult = new System.Windows.Forms.NumericUpDown();
             this.btBlend = new System.Windows.Forms.Button();
             this.btAverage = new System.Windows.Forms.Button();
@@ -107,6 +107,7 @@
             this.gbConvolutionOperations = new System.Windows.Forms.GroupBox();
             this.btGaussian = new System.Windows.Forms.Button();
             this.btLogicalOperations = new System.Windows.Forms.GroupBox();
+            this.btGrayScaleLuminance = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -192,25 +193,25 @@
             this.btCarregarImagem2.UseVisualStyleBackColor = true;
             this.btCarregarImagem2.Click += new System.EventHandler(this.btCarregarImagem2_Click);
             // 
-            // Add_Img
+            // btAdd
             // 
-            this.Add_Img.Location = new System.Drawing.Point(6, 20);
-            this.Add_Img.Name = "Add_Img";
-            this.Add_Img.Size = new System.Drawing.Size(81, 29);
-            this.Add_Img.TabIndex = 6;
-            this.Add_Img.Text = "Somar Img";
-            this.Add_Img.UseVisualStyleBackColor = true;
-            this.Add_Img.Click += new System.EventHandler(this.Somar_Img_Click);
+            this.btAdd.Location = new System.Drawing.Point(6, 20);
+            this.btAdd.Name = "btAdd";
+            this.btAdd.Size = new System.Drawing.Size(81, 29);
+            this.btAdd.TabIndex = 6;
+            this.btAdd.Text = "Somar Imgs";
+            this.btAdd.UseVisualStyleBackColor = true;
+            this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
             // 
-            // Sub_Img
+            // btSubtract
             // 
-            this.Sub_Img.Location = new System.Drawing.Point(108, 19);
-            this.Sub_Img.Name = "Sub_Img";
-            this.Sub_Img.Size = new System.Drawing.Size(86, 29);
-            this.Sub_Img.TabIndex = 7;
-            this.Sub_Img.Text = "Subtrair Img";
-            this.Sub_Img.UseVisualStyleBackColor = true;
-            this.Sub_Img.Click += new System.EventHandler(this.Subtrair_Img_Click);
+            this.btSubtract.Location = new System.Drawing.Point(108, 19);
+            this.btSubtract.Name = "btSubtract";
+            this.btSubtract.Size = new System.Drawing.Size(86, 29);
+            this.btSubtract.TabIndex = 7;
+            this.btSubtract.Text = "Subtrair Imgs";
+            this.btSubtract.UseVisualStyleBackColor = true;
+            this.btSubtract.Click += new System.EventHandler(this.btSubtract_Click);
             // 
             // Brightness_Mult
             // 
@@ -235,25 +236,25 @@
             0,
             0});
             // 
-            // bt_add_Brightness
+            // btAddBrightness
             // 
-            this.bt_add_Brightness.Location = new System.Drawing.Point(479, 4);
-            this.bt_add_Brightness.Name = "bt_add_Brightness";
-            this.bt_add_Brightness.Size = new System.Drawing.Size(81, 37);
-            this.bt_add_Brightness.TabIndex = 10;
-            this.bt_add_Brightness.Text = "Somar Brilho";
-            this.bt_add_Brightness.UseVisualStyleBackColor = true;
-            this.bt_add_Brightness.Click += new System.EventHandler(this.bt_add_Brightness_Click);
+            this.btAddBrightness.Location = new System.Drawing.Point(479, 4);
+            this.btAddBrightness.Name = "btAddBrightness";
+            this.btAddBrightness.Size = new System.Drawing.Size(81, 37);
+            this.btAddBrightness.TabIndex = 10;
+            this.btAddBrightness.Text = "Somar Brilho";
+            this.btAddBrightness.UseVisualStyleBackColor = true;
+            this.btAddBrightness.Click += new System.EventHandler(this.btAddBrightness_Click);
             // 
-            // bt_sub_Brightness
+            // btSubtractBrightness
             // 
-            this.bt_sub_Brightness.Location = new System.Drawing.Point(479, 47);
-            this.bt_sub_Brightness.Name = "bt_sub_Brightness";
-            this.bt_sub_Brightness.Size = new System.Drawing.Size(81, 37);
-            this.bt_sub_Brightness.TabIndex = 11;
-            this.bt_sub_Brightness.Text = "Subtrair Brilho";
-            this.bt_sub_Brightness.UseVisualStyleBackColor = true;
-            this.bt_sub_Brightness.Click += new System.EventHandler(this.bt_sub_Brightness_Click);
+            this.btSubtractBrightness.Location = new System.Drawing.Point(479, 47);
+            this.btSubtractBrightness.Name = "btSubtractBrightness";
+            this.btSubtractBrightness.Size = new System.Drawing.Size(81, 37);
+            this.btSubtractBrightness.TabIndex = 11;
+            this.btSubtractBrightness.Text = "Subtrair Brilho";
+            this.btSubtractBrightness.UseVisualStyleBackColor = true;
+            this.btSubtractBrightness.Click += new System.EventHandler(this.btSubtractBrightness_Click);
             // 
             // Brightness_Up
             // 
@@ -267,25 +268,25 @@
             this.Brightness_Up.Size = new System.Drawing.Size(68, 20);
             this.Brightness_Up.TabIndex = 12;
             // 
-            // bt_div_Brightness
+            // btDivBrightness
             // 
-            this.bt_div_Brightness.Location = new System.Drawing.Point(479, 134);
-            this.bt_div_Brightness.Name = "bt_div_Brightness";
-            this.bt_div_Brightness.Size = new System.Drawing.Size(81, 37);
-            this.bt_div_Brightness.TabIndex = 14;
-            this.bt_div_Brightness.Text = "Dividir Brilho";
-            this.bt_div_Brightness.UseVisualStyleBackColor = true;
-            this.bt_div_Brightness.Click += new System.EventHandler(this.bt_div_Brightness_Click);
+            this.btDivBrightness.Location = new System.Drawing.Point(479, 134);
+            this.btDivBrightness.Name = "btDivBrightness";
+            this.btDivBrightness.Size = new System.Drawing.Size(81, 37);
+            this.btDivBrightness.TabIndex = 14;
+            this.btDivBrightness.Text = "Dividir Brilho";
+            this.btDivBrightness.UseVisualStyleBackColor = true;
+            this.btDivBrightness.Click += new System.EventHandler(this.btDivBrightness_Click);
             // 
-            // bt_mult_Brightness
+            // btMultBrightness
             // 
-            this.bt_mult_Brightness.Location = new System.Drawing.Point(479, 90);
-            this.bt_mult_Brightness.Name = "bt_mult_Brightness";
-            this.bt_mult_Brightness.Size = new System.Drawing.Size(81, 37);
-            this.bt_mult_Brightness.TabIndex = 13;
-            this.bt_mult_Brightness.Text = "Multiplicar Brilho";
-            this.bt_mult_Brightness.UseVisualStyleBackColor = true;
-            this.bt_mult_Brightness.Click += new System.EventHandler(this.bt_mult_Brightness_Click);
+            this.btMultBrightness.Location = new System.Drawing.Point(479, 90);
+            this.btMultBrightness.Name = "btMultBrightness";
+            this.btMultBrightness.Size = new System.Drawing.Size(81, 37);
+            this.btMultBrightness.TabIndex = 13;
+            this.btMultBrightness.Text = "Multiplicar Brilho";
+            this.btMultBrightness.UseVisualStyleBackColor = true;
+            this.btMultBrightness.Click += new System.EventHandler(this.btMultBrightness_Click);
             // 
             // Brightness_Down
             // 
@@ -449,15 +450,15 @@
             this.btOverlay.UseVisualStyleBackColor = true;
             this.btOverlay.Click += new System.EventHandler(this.btOverlay_Click);
             // 
-            // btFlipR
+            // btFlipHorizontal
             // 
-            this.btFlipR.Location = new System.Drawing.Point(974, 301);
-            this.btFlipR.Name = "btFlipR";
-            this.btFlipR.Size = new System.Drawing.Size(106, 37);
-            this.btFlipR.TabIndex = 21;
-            this.btFlipR.Text = "Espelhar";
-            this.btFlipR.UseVisualStyleBackColor = true;
-            this.btFlipR.Click += new System.EventHandler(this.btFlip_Horizontal_Click);
+            this.btFlipHorizontal.Location = new System.Drawing.Point(974, 301);
+            this.btFlipHorizontal.Name = "btFlipHorizontal";
+            this.btFlipHorizontal.Size = new System.Drawing.Size(106, 37);
+            this.btFlipHorizontal.TabIndex = 21;
+            this.btFlipHorizontal.Text = "Espelhar";
+            this.btFlipHorizontal.UseVisualStyleBackColor = true;
+            this.btFlipHorizontal.Click += new System.EventHandler(this.btFlipHorizontal_Click);
             // 
             // btFlipUpDown
             // 
@@ -469,35 +470,35 @@
             this.btFlipUpDown.UseVisualStyleBackColor = true;
             this.btFlipUpDown.Click += new System.EventHandler(this.btFlipUpDown_Click);
             // 
-            // btGray
+            // btGrayScaleAverage
             // 
-            this.btGray.Location = new System.Drawing.Point(479, 177);
-            this.btGray.Name = "btGray";
-            this.btGray.Size = new System.Drawing.Size(163, 37);
-            this.btGray.TabIndex = 23;
-            this.btGray.Text = "Escala de Cinza";
-            this.btGray.UseVisualStyleBackColor = true;
-            this.btGray.Click += new System.EventHandler(this.btGray_Click);
+            this.btGrayScaleAverage.Location = new System.Drawing.Point(479, 177);
+            this.btGrayScaleAverage.Name = "btGrayScaleAverage";
+            this.btGrayScaleAverage.Size = new System.Drawing.Size(163, 37);
+            this.btGrayScaleAverage.TabIndex = 23;
+            this.btGrayScaleAverage.Text = "Escala de Cinza Media";
+            this.btGrayScaleAverage.UseVisualStyleBackColor = true;
+            this.btGrayScaleAverage.Click += new System.EventHandler(this.btGrayScaleAverage_Click);
             // 
-            // bt_Difference
+            // btDifference
             // 
-            this.bt_Difference.Location = new System.Drawing.Point(12, 55);
-            this.bt_Difference.Name = "bt_Difference";
-            this.bt_Difference.Size = new System.Drawing.Size(75, 30);
-            this.bt_Difference.TabIndex = 24;
-            this.bt_Difference.Text = "Diferença";
-            this.bt_Difference.UseVisualStyleBackColor = true;
-            this.bt_Difference.Click += new System.EventHandler(this.bt_Difference_Click);
+            this.btDifference.Location = new System.Drawing.Point(12, 55);
+            this.btDifference.Name = "btDifference";
+            this.btDifference.Size = new System.Drawing.Size(75, 30);
+            this.btDifference.TabIndex = 24;
+            this.btDifference.Text = "Diferença";
+            this.btDifference.UseVisualStyleBackColor = true;
+            this.btDifference.Click += new System.EventHandler(this.btDifference_Click);
             // 
-            // btN
+            // btNegative
             // 
-            this.btN.Location = new System.Drawing.Point(1081, 301);
-            this.btN.Name = "btN";
-            this.btN.Size = new System.Drawing.Size(109, 37);
-            this.btN.TabIndex = 25;
-            this.btN.Text = "Negativo";
-            this.btN.UseVisualStyleBackColor = true;
-            this.btN.Click += new System.EventHandler(this.btN_Click);
+            this.btNegative.Location = new System.Drawing.Point(1081, 301);
+            this.btNegative.Name = "btNegative";
+            this.btNegative.Size = new System.Drawing.Size(109, 37);
+            this.btNegative.TabIndex = 25;
+            this.btNegative.Text = "Negativo";
+            this.btNegative.UseVisualStyleBackColor = true;
+            this.btNegative.Click += new System.EventHandler(this.btNegative_Click);
             // 
             // Blend_Mult
             // 
@@ -584,7 +585,7 @@
             // 
             // btBinarize
             // 
-            this.btBinarize.Location = new System.Drawing.Point(479, 263);
+            this.btBinarize.Location = new System.Drawing.Point(479, 306);
             this.btBinarize.Name = "btBinarize";
             this.btBinarize.Size = new System.Drawing.Size(163, 37);
             this.btBinarize.TabIndex = 33;
@@ -605,7 +606,7 @@
             // 
             // btEqualize
             // 
-            this.btEqualize.Location = new System.Drawing.Point(479, 220);
+            this.btEqualize.Location = new System.Drawing.Point(479, 263);
             this.btEqualize.Name = "btEqualize";
             this.btEqualize.Size = new System.Drawing.Size(163, 37);
             this.btEqualize.TabIndex = 38;
@@ -615,32 +616,32 @@
             // 
             // chHistogram1
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chHistogram1.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chHistogram1.Legends.Add(legend3);
+            chartArea5.Name = "ChartArea1";
+            this.chHistogram1.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.chHistogram1.Legends.Add(legend5);
             this.chHistogram1.Location = new System.Drawing.Point(6, 281);
             this.chHistogram1.Name = "chHistogram1";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chHistogram1.Series.Add(series3);
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            this.chHistogram1.Series.Add(series5);
             this.chHistogram1.Size = new System.Drawing.Size(448, 127);
             this.chHistogram1.TabIndex = 39;
             this.chHistogram1.Text = "chart1";
             // 
             // chHistogram2
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chHistogram2.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chHistogram2.Legends.Add(legend4);
+            chartArea6.Name = "ChartArea1";
+            this.chHistogram2.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.chHistogram2.Legends.Add(legend6);
             this.chHistogram2.Location = new System.Drawing.Point(6, 410);
             this.chHistogram2.Name = "chHistogram2";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chHistogram2.Series.Add(series4);
+            series6.ChartArea = "ChartArea1";
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.chHistogram2.Series.Add(series6);
             this.chHistogram2.Size = new System.Drawing.Size(448, 127);
             this.chHistogram2.TabIndex = 40;
             this.chHistogram2.Text = "chart2";
@@ -732,14 +733,14 @@
             "Reflect",
             "Mirror",
             "Wrap"});
-            this.cbPadding.Location = new System.Drawing.Point(584, 346);
+            this.cbPadding.Location = new System.Drawing.Point(584, 349);
             this.cbPadding.Name = "cbPadding";
             this.cbPadding.Size = new System.Drawing.Size(58, 21);
             this.cbPadding.TabIndex = 48;
             // 
             // btPadding
             // 
-            this.btPadding.Location = new System.Drawing.Point(479, 344);
+            this.btPadding.Location = new System.Drawing.Point(479, 349);
             this.btPadding.Name = "btPadding";
             this.btPadding.Size = new System.Drawing.Size(99, 23);
             this.btPadding.TabIndex = 49;
@@ -875,7 +876,7 @@
             // 
             // nudPadding
             // 
-            this.nudPadding.Location = new System.Drawing.Point(479, 373);
+            this.nudPadding.Location = new System.Drawing.Point(479, 378);
             this.nudPadding.Maximum = new decimal(new int[] {
             1410065408,
             2,
@@ -893,9 +894,9 @@
             // gbOperationsBetweenImages
             // 
             this.gbOperationsBetweenImages.Controls.Add(this.btOverlay);
-            this.gbOperationsBetweenImages.Controls.Add(this.Sub_Img);
-            this.gbOperationsBetweenImages.Controls.Add(this.Add_Img);
-            this.gbOperationsBetweenImages.Controls.Add(this.bt_Difference);
+            this.gbOperationsBetweenImages.Controls.Add(this.btSubtract);
+            this.gbOperationsBetweenImages.Controls.Add(this.btAdd);
+            this.gbOperationsBetweenImages.Controls.Add(this.btDifference);
             this.gbOperationsBetweenImages.Controls.Add(this.btBlend);
             this.gbOperationsBetweenImages.Controls.Add(this.Blend_Mult);
             this.gbOperationsBetweenImages.Controls.Add(this.btAverage);
@@ -950,11 +951,22 @@
             this.btLogicalOperations.TabStop = false;
             this.btLogicalOperations.Text = "Operações Lógicas";
             // 
+            // btGrayScaleLuminance
+            // 
+            this.btGrayScaleLuminance.Location = new System.Drawing.Point(479, 220);
+            this.btGrayScaleLuminance.Name = "btGrayScaleLuminance";
+            this.btGrayScaleLuminance.Size = new System.Drawing.Size(163, 37);
+            this.btGrayScaleLuminance.TabIndex = 60;
+            this.btGrayScaleLuminance.Text = "Escala de Cinza luminância";
+            this.btGrayScaleLuminance.UseVisualStyleBackColor = true;
+            this.btGrayScaleLuminance.Click += new System.EventHandler(this.btGrayScaleLuminance_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1202, 549);
+            this.Controls.Add(this.btGrayScaleLuminance);
             this.Controls.Add(this.btLogicalOperations);
             this.Controls.Add(this.gbConvolutionOperations);
             this.Controls.Add(this.gbOperationsBetweenImages);
@@ -967,20 +979,20 @@
             this.Controls.Add(this.chHistogram1);
             this.Controls.Add(this.btEqualize);
             this.Controls.Add(this.btBinarize);
-            this.Controls.Add(this.btN);
-            this.Controls.Add(this.btGray);
+            this.Controls.Add(this.btNegative);
+            this.Controls.Add(this.btGrayScaleAverage);
             this.Controls.Add(this.btFlipUpDown);
-            this.Controls.Add(this.btFlipR);
+            this.Controls.Add(this.btFlipHorizontal);
             this.Controls.Add(this.Image_Frame_3);
             this.Controls.Add(this.Image_Frame_2);
             this.Controls.Add(this.Image_Frame_1);
             this.Controls.Add(this.Brightness_Div);
             this.Controls.Add(this.Brightness_Down);
-            this.Controls.Add(this.bt_div_Brightness);
-            this.Controls.Add(this.bt_mult_Brightness);
+            this.Controls.Add(this.btDivBrightness);
+            this.Controls.Add(this.btMultBrightness);
             this.Controls.Add(this.Brightness_Up);
-            this.Controls.Add(this.bt_sub_Brightness);
-            this.Controls.Add(this.bt_add_Brightness);
+            this.Controls.Add(this.btSubtractBrightness);
+            this.Controls.Add(this.btAddBrightness);
             this.Controls.Add(this.Brightness_Mult);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -1020,25 +1032,25 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button btCarregarImagem2;
-        private System.Windows.Forms.Button Add_Img;
-        private System.Windows.Forms.Button Sub_Img;
+        private System.Windows.Forms.Button btAdd;
+        private System.Windows.Forms.Button btSubtract;
         private System.Windows.Forms.NumericUpDown Brightness_Mult;
-        private System.Windows.Forms.Button bt_add_Brightness;
-        private System.Windows.Forms.Button bt_sub_Brightness;
+        private System.Windows.Forms.Button btAddBrightness;
+        private System.Windows.Forms.Button btSubtractBrightness;
         private System.Windows.Forms.NumericUpDown Brightness_Up;
-        private System.Windows.Forms.Button bt_div_Brightness;
-        private System.Windows.Forms.Button bt_mult_Brightness;
+        private System.Windows.Forms.Button btDivBrightness;
+        private System.Windows.Forms.Button btMultBrightness;
         private System.Windows.Forms.NumericUpDown Brightness_Down;
         private System.Windows.Forms.NumericUpDown Brightness_Div;
         private System.Windows.Forms.GroupBox Image_Frame_1;
         private System.Windows.Forms.GroupBox Image_Frame_2;
         private System.Windows.Forms.GroupBox Image_Frame_3;
         private System.Windows.Forms.Button btOverlay;
-        private System.Windows.Forms.Button btFlipR;
+        private System.Windows.Forms.Button btFlipHorizontal;
         private System.Windows.Forms.Button btFlipUpDown;
-        private System.Windows.Forms.Button btGray;
-        private System.Windows.Forms.Button bt_Difference;
-        private System.Windows.Forms.Button btN;
+        private System.Windows.Forms.Button btGrayScaleAverage;
+        private System.Windows.Forms.Button btDifference;
+        private System.Windows.Forms.Button btNegative;
         private System.Windows.Forms.NumericUpDown Blend_Mult;
         private System.Windows.Forms.Button btBlend;
         private System.Windows.Forms.Button btAverage;
@@ -1084,6 +1096,7 @@
         private System.Windows.Forms.GroupBox gbConvolutionOperations;
         private System.Windows.Forms.Button btGaussian;
         private System.Windows.Forms.GroupBox btLogicalOperations;
+        private System.Windows.Forms.Button btGrayScaleLuminance;
     }
 }
 
