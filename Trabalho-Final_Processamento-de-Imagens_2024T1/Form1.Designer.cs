@@ -108,6 +108,13 @@
             this.btGaussian = new System.Windows.Forms.Button();
             this.btLogicalOperations = new System.Windows.Forms.GroupBox();
             this.btGrayScaleLuminance = new System.Windows.Forms.Button();
+            this.btSimpleCrop = new System.Windows.Forms.Button();
+            this.nudSimpleCrop = new System.Windows.Forms.NumericUpDown();
+            this.btAdvancedCrop = new System.Windows.Forms.Button();
+            this.nudRightCrop = new System.Windows.Forms.NumericUpDown();
+            this.nudTopCrop = new System.Windows.Forms.NumericUpDown();
+            this.nudLeftCrop = new System.Windows.Forms.NumericUpDown();
+            this.nudBottomCrop = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -127,6 +134,11 @@
             this.gbOperationsBetweenImages.SuspendLayout();
             this.gbConvolutionOperations.SuspendLayout();
             this.btLogicalOperations.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSimpleCrop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRightCrop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTopCrop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLeftCrop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBottomCrop)).BeginInit();
             this.SuspendLayout();
             // 
             // btCarregarImagem
@@ -961,11 +973,123 @@
             this.btGrayScaleLuminance.UseVisualStyleBackColor = true;
             this.btGrayScaleLuminance.Click += new System.EventHandler(this.btGrayScaleLuminance_Click);
             // 
+            // btSimpleCrop
+            // 
+            this.btSimpleCrop.Location = new System.Drawing.Point(479, 404);
+            this.btSimpleCrop.Name = "btSimpleCrop";
+            this.btSimpleCrop.Size = new System.Drawing.Size(99, 23);
+            this.btSimpleCrop.TabIndex = 61;
+            this.btSimpleCrop.Text = "Corte Simples";
+            this.btSimpleCrop.UseVisualStyleBackColor = true;
+            this.btSimpleCrop.Click += new System.EventHandler(this.btSimpleCrop_Click);
+            // 
+            // nudSimpleCrop
+            // 
+            this.nudSimpleCrop.Location = new System.Drawing.Point(584, 407);
+            this.nudSimpleCrop.Maximum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            0});
+            this.nudSimpleCrop.Name = "nudSimpleCrop";
+            this.nudSimpleCrop.Size = new System.Drawing.Size(58, 20);
+            this.nudSimpleCrop.TabIndex = 62;
+            this.nudSimpleCrop.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // btAdvancedCrop
+            // 
+            this.btAdvancedCrop.Location = new System.Drawing.Point(512, 433);
+            this.btAdvancedCrop.Name = "btAdvancedCrop";
+            this.btAdvancedCrop.Size = new System.Drawing.Size(99, 23);
+            this.btAdvancedCrop.TabIndex = 63;
+            this.btAdvancedCrop.Text = "Corte Avançado";
+            this.btAdvancedCrop.UseVisualStyleBackColor = true;
+            this.btAdvancedCrop.Click += new System.EventHandler(this.btAdvancedCrop_Click);
+            // 
+            // nudRightCrop
+            // 
+            this.nudRightCrop.Location = new System.Drawing.Point(584, 488);
+            this.nudRightCrop.Maximum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            0});
+            this.nudRightCrop.Name = "nudRightCrop";
+            this.nudRightCrop.Size = new System.Drawing.Size(58, 20);
+            this.nudRightCrop.TabIndex = 64;
+            this.nudRightCrop.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // nudTopCrop
+            // 
+            this.nudTopCrop.Location = new System.Drawing.Point(531, 462);
+            this.nudTopCrop.Maximum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            0});
+            this.nudTopCrop.Name = "nudTopCrop";
+            this.nudTopCrop.Size = new System.Drawing.Size(58, 20);
+            this.nudTopCrop.TabIndex = 65;
+            this.nudTopCrop.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // nudLeftCrop
+            // 
+            this.nudLeftCrop.Location = new System.Drawing.Point(479, 488);
+            this.nudLeftCrop.Maximum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            0});
+            this.nudLeftCrop.Name = "nudLeftCrop";
+            this.nudLeftCrop.Size = new System.Drawing.Size(58, 20);
+            this.nudLeftCrop.TabIndex = 66;
+            this.nudLeftCrop.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // nudBottomCrop
+            // 
+            this.nudBottomCrop.Location = new System.Drawing.Point(531, 517);
+            this.nudBottomCrop.Maximum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            0});
+            this.nudBottomCrop.Name = "nudBottomCrop";
+            this.nudBottomCrop.Size = new System.Drawing.Size(58, 20);
+            this.nudBottomCrop.TabIndex = 67;
+            this.nudBottomCrop.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1202, 549);
+            this.Controls.Add(this.nudBottomCrop);
+            this.Controls.Add(this.nudLeftCrop);
+            this.Controls.Add(this.nudTopCrop);
+            this.Controls.Add(this.nudRightCrop);
+            this.Controls.Add(this.btAdvancedCrop);
+            this.Controls.Add(this.nudSimpleCrop);
+            this.Controls.Add(this.btSimpleCrop);
             this.Controls.Add(this.btGrayScaleLuminance);
             this.Controls.Add(this.btLogicalOperations);
             this.Controls.Add(this.gbConvolutionOperations);
@@ -1018,6 +1142,11 @@
             this.gbOperationsBetweenImages.ResumeLayout(false);
             this.gbConvolutionOperations.ResumeLayout(false);
             this.btLogicalOperations.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nudSimpleCrop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudRightCrop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudTopCrop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudLeftCrop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBottomCrop)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1097,6 +1226,13 @@
         private System.Windows.Forms.Button btGaussian;
         private System.Windows.Forms.GroupBox btLogicalOperations;
         private System.Windows.Forms.Button btGrayScaleLuminance;
+        private System.Windows.Forms.Button btSimpleCrop;
+        private System.Windows.Forms.NumericUpDown nudSimpleCrop;
+        private System.Windows.Forms.Button btAdvancedCrop;
+        private System.Windows.Forms.NumericUpDown nudRightCrop;
+        private System.Windows.Forms.NumericUpDown nudTopCrop;
+        private System.Windows.Forms.NumericUpDown nudLeftCrop;
+        private System.Windows.Forms.NumericUpDown nudBottomCrop;
     }
 }
 

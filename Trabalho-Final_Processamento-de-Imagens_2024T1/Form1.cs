@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 
 namespace ImageLoader
 {
@@ -2351,7 +2352,85 @@ namespace ImageLoader
                 }
             }
         }
+        private void btSimpleCrop_Click(object sender, EventArgs e)
+        {
+            int numero = (int)nudSimpleCrop.Value;
 
+            if (img3 == null)
+            {
+                if (img1 == null)
+                {
+                    MessageBox.Show("img1 está nula");
+                    return;
+                }
+
+                try
+                {
+                    img3 = Crop_Image_Edges(img1, numero);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            }
+            else
+            {
+                try
+                {
+                    img3 = Crop_Image_Edges(img3, numero);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+        private void btAdvancedCrop_Click(object sender, EventArgs e)
+        {
+            int left = (int)nudLeftCrop.Value;
+            int right = (int)nudRightCrop.Value;
+            int top = (int)nudTopCrop.Value;
+            int bottom = (int)nudBottomCrop.Value;
+
+            if (img3 == null)
+            {
+                if (img1 == null)
+                {
+                    MessageBox.Show("img1 está nula");
+                    return;
+                }
+
+                try
+                {
+                    img3 = Crop_Image_Edges(img1, left, right, top, bottom);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            }
+            else
+            {
+                try
+                {
+                    img3 = Crop_Image_Edges(img3, left, right, top, bottom);
+                    pictureBox3.Image = img3;
+                    Tx_Resolution_Update();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
         private void btDilatation_Click(object sender, EventArgs e)
         {
             if (img3 == null)
