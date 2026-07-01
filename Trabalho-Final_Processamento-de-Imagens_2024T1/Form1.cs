@@ -31,7 +31,11 @@ namespace ImageLoader
         int[] CFD;
 
         int[,] Kernel;
-        int[,] StructuringElement;
+        int[,] StructuringElement ={
+            {0,255,0 },
+            {255,255,255 },
+            {0,255,0 } 
+        };
 
         enum PaddingMode
         {
@@ -1479,7 +1483,7 @@ namespace ImageLoader
                         {
                             for (int l = 0; l < StructuringElement.GetLength(1); l++)
                             {
-                                Color pixel = binary1.GetPixel(i - 1 + k, j - 1 + l);
+                                Color pixel = binary1.GetPixel(i - 1 + l, j - 1 + k);
 
                                 if (pixel.R == 255 && StructuringElement[k, l] == 255)
                                 {
@@ -1525,7 +1529,7 @@ namespace ImageLoader
                         {
                             for (int l = 0; l < StructuringElement.GetLength(1); l++)
                             {
-                                Color pixel = binary1.GetPixel(i - 1 + k, j - 1 + l);
+                                Color pixel = binary1.GetPixel(i - 1 + l, j - 1 + k);
 
                                 if (pixel.R == 0 && StructuringElement[k, l] == 255)
                                 {
